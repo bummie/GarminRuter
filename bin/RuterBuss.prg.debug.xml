@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<debugInfo>
+<pcToLineNum>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="5" pc="268435456" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="6" pc="268435460" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="10" pc="268435479" symbol="onStart"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="14" pc="268435484" symbol="onStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="18" pc="268435489" symbol="getInitialView"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="19" pc="268435493" symbol="getInitialView"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="5" pc="268435531" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="6" pc="268435535" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="10" pc="268435554" symbol="onLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="11" pc="268435558" symbol="onLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="17" pc="268435596" symbol="onShow"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="21" pc="268435601" symbol="onUpdate"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="23" pc="268435605" symbol="onUpdate"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="29" pc="268435626" symbol="onHide"/>
+<entry filename="Rez" lineNum="19" pc="268435631" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="23" pc="268435643" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="24" pc="268435774" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="25" pc="268435826" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="28" pc="268435878" symbol="MainLayout"/>
+</pcToLineNum>
+<symbolTable>
+<entry id="8389124" method="true" symbol="onUpdate"/>
+<entry field="true" id="8388611" module="true" symbol="Toybox"/>
+<entry id="8388770" module="true" object="true" symbol="Strings"/>
+<entry id="8389280" method="true" symbol="getInitialView"/>
+<entry id="15" method="true" symbol="MainLayout"/>
+<entry id="8388769" module="true" object="true" symbol="Rez"/>
+<entry id="8389123" method="true" symbol="onShow"/>
+<entry id="8388702" method="true" symbol="initialize"/>
+<entry field="true" id="16" symbol="AppName"/>
+<entry field="true" id="14" symbol="LauncherIcon"/>
+<entry id="8389281" method="true" symbol="onStop"/>
+<entry id="10" object="true" symbol="RuterBussView"/>
+<entry field="true" id="8389065" symbol="locY"/>
+<entry field="true" id="8389064" symbol="locX"/>
+<entry id="8388771" module="true" object="true" symbol="Drawables"/>
+<entry id="8389122" method="true" symbol="onLayout"/>
+<entry id="8389279" method="true" symbol="onStart"/>
+<entry field="true" id="13" symbol="id_monkey"/>
+<entry id="9" object="true" symbol="RuterBussApp"/>
+<entry id="12" module="true" symbol="Layouts"/>
+<entry id="8389125" method="true" symbol="onHide"/>
+<entry id="8389345" symbol="rezId"/>
+<entry id="8390088" module="true" object="true" symbol="JsonData"/>
+<entry field="true" id="8389063" symbol="identifier"/>
+<entry id="11" module="true" symbol="Menus"/>
+<entry id="8388772" module="true" object="true" symbol="Fonts"/>
+</symbolTable>
+<localVars>
+<entry endPc="268435484" name="state" stackId="1" startPc="268435479"/>
+<entry endPc="268435489" name="state" stackId="1" startPc="268435484"/>
+<entry endPc="268435596" name="dc" stackId="1" startPc="268435554"/>
+<entry endPc="268435626" name="dc" stackId="1" startPc="268435601"/>
+<entry endPc="268435895" name="rez_cmp_local_bitmap_id_monkey" stackId="2" startPc="268435643"/>
+<entry endPc="268435896" name="dc" stackId="1" startPc="268435631"/>
+</localVars>
+<annotations/>
+<functions>
+<functionEntry accessMode="public" name="initialize" parent="RuterBussApp">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onStart" parent="RuterBussApp">
+<param id="state"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onStop" parent="RuterBussApp">
+<param id="state"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="getInitialView" parent="RuterBussApp">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="initialize" parent="RuterBussView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onLayout" parent="RuterBussView">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onShow" parent="RuterBussView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onUpdate" parent="RuterBussView">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onHide" parent="RuterBussView">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="MainLayout" parent="Layouts">
+<param id="dc"/>
+<documentation><![CDATA[<div class="description"> Draw the layout<br/> param The context<br/></div>]]></documentation>
+</functionEntry>
+</functions>
+<dataEntryOffsetMappings>
+<dataEntry offset="87" parentId="" symbolId="globals" type="module"/>
+<dataEntry offset="166" parentId="globals" symbolId="Rez" type="module"/>
+<dataEntry offset="245" parentId="Rez" symbolId="Drawables" type="module"/>
+<dataEntry offset="292" parentId="Rez" symbolId="Menus" type="module"/>
+<dataEntry offset="323" parentId="Rez" symbolId="Fonts" type="module"/>
+<dataEntry offset="354" parentId="Rez" symbolId="JsonData" type="module"/>
+<dataEntry offset="385" parentId="Rez" symbolId="Layouts" type="module"/>
+<dataEntry offset="424" parentId="Rez" symbolId="Strings" type="module"/>
+<dataEntry offset="463" parentId="globals" symbolId="RuterBussView" type="class"/>
+<dataEntry offset="542" parentId="globals" symbolId="RuterBussApp" type="class"/>
+</dataEntryOffsetMappings>
+</debugInfo>

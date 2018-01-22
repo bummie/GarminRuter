@@ -1,21 +1,27 @@
 using Toybox.Application as App;
 
-class RuterBussApp extends App.AppBase {
+class RuterBussApp extends App.AppBase
+ {
 
-    function initialize() {
+    function initialize()
+    {
         AppBase.initialize();
     }
 
     // onStart() is called on application start up
-    function onStart(state) {
+    function onStart(state)
+    {
+    	System.print("HELLO");
     }
 
     // onStop() is called when your application is exiting
-    function onStop(state) {
+    function onStop(state) 
+    {
     }
 
     // Return the initial view of your application here
-    function getInitialView() {
+    function getInitialView() 
+    {
         return [ new RuterBussView() ];
     }
 

@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <debugInfo>
 <pcToLineNum>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="5" pc="268435456" symbol="initialize"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="6" pc="268435460" symbol="initialize"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="10" pc="268435479" symbol="onStart"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="14" pc="268435484" symbol="onStop"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="18" pc="268435489" symbol="getInitialView"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="19" pc="268435493" symbol="getInitialView"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="5" pc="268435531" symbol="initialize"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="6" pc="268435535" symbol="initialize"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="10" pc="268435554" symbol="onLayout"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="11" pc="268435558" symbol="onLayout"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="17" pc="268435596" symbol="onShow"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="21" pc="268435601" symbol="onUpdate"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="23" pc="268435605" symbol="onUpdate"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="29" pc="268435626" symbol="onHide"/>
-<entry filename="Rez" lineNum="19" pc="268435631" symbol="MainLayout"/>
-<entry filename="Rez" lineNum="23" pc="268435643" symbol="MainLayout"/>
-<entry filename="Rez" lineNum="24" pc="268435774" symbol="MainLayout"/>
-<entry filename="Rez" lineNum="25" pc="268435826" symbol="MainLayout"/>
-<entry filename="Rez" lineNum="28" pc="268435878" symbol="MainLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="6" pc="268435456" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="8" pc="268435460" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="12" pc="268435479" symbol="onStart"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="14" pc="268435483" symbol="onStart"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="18" pc="268435507" symbol="onStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="23" pc="268435512" symbol="getInitialView"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="25" pc="268435516" symbol="getInitialView"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="6" pc="268435554" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="8" pc="268435558" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="12" pc="268435577" symbol="onLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="14" pc="268435581" symbol="onLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="20" pc="268435619" symbol="onShow"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="25" pc="268435624" symbol="onUpdate"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="28" pc="268435628" symbol="onUpdate"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="35" pc="268435649" symbol="onHide"/>
+<entry filename="Rez" lineNum="19" pc="268435654" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="23" pc="268435666" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="24" pc="268435797" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="25" pc="268435849" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="28" pc="268435901" symbol="MainLayout"/>
 </pcToLineNum>
 <symbolTable>
 <entry id="8389124" method="true" symbol="onUpdate"/>
@@ -50,12 +51,12 @@
 <entry id="8388772" module="true" object="true" symbol="Fonts"/>
 </symbolTable>
 <localVars>
-<entry endPc="268435484" name="state" stackId="1" startPc="268435479"/>
-<entry endPc="268435489" name="state" stackId="1" startPc="268435484"/>
-<entry endPc="268435596" name="dc" stackId="1" startPc="268435554"/>
-<entry endPc="268435626" name="dc" stackId="1" startPc="268435601"/>
-<entry endPc="268435895" name="rez_cmp_local_bitmap_id_monkey" stackId="2" startPc="268435643"/>
-<entry endPc="268435896" name="dc" stackId="1" startPc="268435631"/>
+<entry endPc="268435507" name="state" stackId="1" startPc="268435479"/>
+<entry endPc="268435512" name="state" stackId="1" startPc="268435507"/>
+<entry endPc="268435619" name="dc" stackId="1" startPc="268435577"/>
+<entry endPc="268435649" name="dc" stackId="1" startPc="268435624"/>
+<entry endPc="268435918" name="rez_cmp_local_bitmap_id_monkey" stackId="2" startPc="268435666"/>
+<entry endPc="268435919" name="dc" stackId="1" startPc="268435654"/>
 </localVars>
 <annotations/>
 <functions>

@@ -1,3 +1,3 @@
 <layout id="MainLayout">
-	<label id="mainLabel" text="Ruter" x ="25" y="25" font="Gfx.FONT_SMALL" color="Gfx.COLOR_GREEN"/>
+	<label id="mainLabel" text="Ruter" x ="100" y="100" font="Gfx.FONT_SMALL" color="Gfx.COLOR_GREEN"/>
 </layout>

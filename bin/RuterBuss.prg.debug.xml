@@ -44,16 +44,17 @@
 <entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="55" pc="268436330" symbol="callbackClosestStop"/>
 <entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="59" pc="268436354" symbol="callbackPrint"/>
 <entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="61" pc="268436358" symbol="callbackPrint"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="65" pc="268436394" symbol="DegToUTM"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="67" pc="268436398" symbol="DegToUTM"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="69" pc="268436429" symbol="DegToUTM"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="70" pc="268437200" symbol="DegToUTM"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="72" pc="268437231" symbol="DegToUTM"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="73" pc="268438475" symbol="DegToUTM"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="75" pc="268438506" symbol="DegToUTM"/>
-<entry filename="Rez" lineNum="18" pc="268438553" symbol="MainLayout"/>
-<entry filename="Rez" lineNum="22" pc="268438565" symbol="MainLayout"/>
-<entry filename="Rez" lineNum="25" pc="268438691" symbol="MainLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="63" pc="268436382" symbol="callbackPrint"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="68" pc="268436476" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="70" pc="268436480" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="72" pc="268436511" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="73" pc="268437282" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="75" pc="268437313" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="76" pc="268438557" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="78" pc="268438588" symbol="DegToUTM"/>
+<entry filename="Rez" lineNum="18" pc="268438635" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="22" pc="268438647" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="25" pc="268438773" symbol="MainLayout"/>
 </pcToLineNum>
 <symbolTable>
 <entry id="8388644" module="true" symbol="System"/>
@@ -122,15 +123,16 @@
 <entry endPc="268436168" name="lon" stackId="2" startPc="268435981"/>
 <entry endPc="268436354" name="response" stackId="1" startPc="268436168"/>
 <entry endPc="268436354" name="data" stackId="2" startPc="268436168"/>
-<entry endPc="268436394" name="responseCode" stackId="1" startPc="268436354"/>
-<entry endPc="268436394" name="data" stackId="2" startPc="268436354"/>
-<entry endPc="268438551" name="Easting" stackId="4" startPc="268436398"/>
-<entry endPc="268438551" name="Zone" stackId="3" startPc="268436398"/>
-<entry endPc="268438551" name="Northing" stackId="5" startPc="268436398"/>
-<entry endPc="268438552" name="Lat" stackId="1" startPc="268436394"/>
-<entry endPc="268438552" name="Lon" stackId="2" startPc="268436394"/>
-<entry endPc="268438708" name="rez_cmp_local_bitmap_mainLabel" stackId="2" startPc="268438565"/>
-<entry endPc="268438709" name="dc" stackId="1" startPc="268438553"/>
+<entry endPc="268436475" name="i" stackId="3" startPc="268436382"/>
+<entry endPc="268436476" name="responseCode" stackId="1" startPc="268436354"/>
+<entry endPc="268436476" name="data" stackId="2" startPc="268436354"/>
+<entry endPc="268438633" name="Easting" stackId="4" startPc="268436480"/>
+<entry endPc="268438633" name="Zone" stackId="3" startPc="268436480"/>
+<entry endPc="268438633" name="Northing" stackId="5" startPc="268436480"/>
+<entry endPc="268438634" name="Lat" stackId="1" startPc="268436476"/>
+<entry endPc="268438634" name="Lon" stackId="2" startPc="268436476"/>
+<entry endPc="268438790" name="rez_cmp_local_bitmap_mainLabel" stackId="2" startPc="268438647"/>
+<entry endPc="268438791" name="dc" stackId="1" startPc="268438635"/>
 </localVars>
 <annotations/>
 <functions>

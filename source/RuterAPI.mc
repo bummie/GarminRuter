@@ -58,7 +58,10 @@ class RuterAPI
 	
 	function callbackPrint(responseCode, data)
 	{
-		System.println(responseCode + " : " + data[0]);
+		for(var i = 0; i < data.size(); i++)
+		{
+			System.println(responseCode + " : " + data[i]["MonitoredVehicleJourney"]["MonitoredCall"]["DestinationDisplay"] + " - " + data[i]["MonitoredVehicleJourney"]["MonitoredCall"]["ExpectedArrivalTime"] );
+		}
 	}
 	
 	// Converts Degrees to UTM coordinates

@@ -1,60 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <debugInfo>
 <pcToLineNum>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="8" pc="268435456" symbol="initialize"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="10" pc="268435460" symbol="initialize"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="14" pc="268435479" symbol="onStart"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="16" pc="268435483" symbol="onStart"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="17" pc="268435506" symbol="onStart"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="19" pc="268435532" symbol="onStart"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="20" pc="268435576" symbol="onStart"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="21" pc="268435600" symbol="onStart"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="25" pc="268435613" symbol="onStop"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="30" pc="268435618" symbol="getInitialView"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="32" pc="268435622" symbol="getInitialView"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="8" pc="268435660" symbol="initialize"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="10" pc="268435664" symbol="initialize"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="14" pc="268435683" symbol="onLayout"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="16" pc="268435687" symbol="onLayout"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="17" pc="268435724" symbol="onLayout"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="23" pc="268435755" symbol="onShow"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="28" pc="268435760" symbol="onUpdate"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="31" pc="268435764" symbol="onUpdate"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="32" pc="268435796" symbol="onUpdate"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="34" pc="268435815" symbol="onUpdate"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="40" pc="268435836" symbol="onHide"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="7" pc="268435841" symbol="fetchLineStops"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="9" pc="268435845" symbol="fetchLineStops"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="10" pc="268435855" symbol="fetchLineStops"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="17" pc="268435937" symbol="fetchLineStops"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="18" pc="268435955" symbol="fetchLineStops"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="22" pc="268435984" symbol="fetchClosestStop"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="24" pc="268435988" symbol="fetchClosestStop"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="25" pc="268435995" symbol="fetchClosestStop"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="32" pc="268436077" symbol="fetchClosestStop"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="33" pc="268436095" symbol="fetchClosestStop"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="36" pc="268436124" symbol="callbackPrint"/>
-<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="38" pc="268436128" symbol="callbackPrint"/>
-<entry filename="Rez" lineNum="18" pc="268436165" symbol="MainLayout"/>
-<entry filename="Rez" lineNum="22" pc="268436177" symbol="MainLayout"/>
-<entry filename="Rez" lineNum="25" pc="268436303" symbol="MainLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="12" pc="268435456" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="14" pc="268435460" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="15" pc="268435478" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="19" pc="268435509" symbol="onStart"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="21" pc="268435513" symbol="onStart"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="25" pc="268435558" symbol="onStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="30" pc="268435563" symbol="getInitialView"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="32" pc="268435567" symbol="getInitialView"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="36" pc="268435605" symbol="onPosition"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="38" pc="268435609" symbol="onPosition"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussApp.mc" lineNum="40" pc="268435628" symbol="onPosition"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="8" pc="268435657" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="10" pc="268435661" symbol="initialize"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="14" pc="268435680" symbol="onLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="16" pc="268435684" symbol="onLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="17" pc="268435721" symbol="onLayout"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="23" pc="268435752" symbol="onShow"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="28" pc="268435757" symbol="onUpdate"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="31" pc="268435761" symbol="onUpdate"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="32" pc="268435793" symbol="onUpdate"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="34" pc="268435812" symbol="onUpdate"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterBussView.mc" lineNum="40" pc="268435833" symbol="onHide"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="11" pc="268435838" symbol="fetchStopData"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="13" pc="268435842" symbol="fetchStopData"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="14" pc="268435852" symbol="fetchStopData"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="21" pc="268435934" symbol="fetchStopData"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="22" pc="268435952" symbol="fetchStopData"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="26" pc="268435981" symbol="fetchClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="28" pc="268435985" symbol="fetchClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="29" pc="268436002" symbol="fetchClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="30" pc="268436039" symbol="fetchClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="37" pc="268436121" symbol="fetchClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="38" pc="268436139" symbol="fetchClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="41" pc="268436168" symbol="callbackClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="43" pc="268436172" symbol="callbackClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="45" pc="268436183" symbol="callbackClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="47" pc="268436213" symbol="callbackClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="48" pc="268436235" symbol="callbackClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="49" pc="268436257" symbol="callbackClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="50" pc="268436304" symbol="callbackClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="55" pc="268436330" symbol="callbackClosestStop"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="59" pc="268436354" symbol="callbackPrint"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="61" pc="268436358" symbol="callbackPrint"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="65" pc="268436394" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="67" pc="268436398" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="69" pc="268436429" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="70" pc="268437200" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="72" pc="268437231" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="73" pc="268438475" symbol="DegToUTM"/>
+<entry filename="F:\\Projects\\Garmin\\Ruter\\.\\source\\RuterAPI.mc" lineNum="75" pc="268438506" symbol="DegToUTM"/>
+<entry filename="Rez" lineNum="18" pc="268438553" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="22" pc="268438565" symbol="MainLayout"/>
+<entry filename="Rez" lineNum="25" pc="268438691" symbol="MainLayout"/>
 </pcToLineNum>
 <symbolTable>
+<entry id="8388644" module="true" symbol="System"/>
 <entry id="8389124" method="true" symbol="onUpdate"/>
+<entry field="true" id="12" symbol="stopName"/>
 <entry id="8390424" module="true" symbol="Storage"/>
 <entry field="true" id="8388611" module="true" symbol="Toybox"/>
 <entry id="8388770" module="true" object="true" symbol="Strings"/>
 <entry field="true" id="8389138" symbol="label"/>
-<entry id="13" method="true" symbol="fetchClosestStop"/>
+<entry id="15" method="true" symbol="fetchClosestStop"/>
 <entry id="8389280" method="true" symbol="getInitialView"/>
-<entry id="18" method="true" symbol="MainLayout"/>
+<entry id="22" method="true" symbol="MainLayout"/>
 <entry id="8388769" module="true" object="true" symbol="Rez"/>
 <entry id="8389123" method="true" symbol="onShow"/>
 <entry id="8388702" method="true" symbol="initialize"/>
-<entry field="true" id="19" symbol="AppName"/>
+<entry field="true" id="23" symbol="AppName"/>
 <entry id="8389594" symbol="headers"/>
-<entry field="true" id="17" symbol="LauncherIcon"/>
+<entry field="true" id="25" symbol="api"/>
+<entry id="8388641" module="true" symbol="Math"/>
+<entry field="true" id="21" symbol="LauncherIcon"/>
 <entry id="8388786" method="true" symbol="method"/>
+<entry field="true" id="13" symbol="stopId"/>
 <entry id="8389281" method="true" symbol="onStop"/>
 <entry id="10" object="true" symbol="RuterBussView"/>
 <entry field="true" id="8389065" symbol="locY"/>
@@ -65,36 +86,51 @@
 <entry id="8389348" symbol="font"/>
 <entry id="8389347" symbol="color"/>
 <entry id="9" object="true" symbol="RuterBussApp"/>
-<entry id="14" method="true" symbol="callbackPrint"/>
-<entry id="16" module="true" symbol="Layouts"/>
+<entry id="17" method="true" symbol="callbackPrint"/>
+<entry id="18" method="true" symbol="DegToUTM"/>
+<entry id="14" method="true" symbol="fetchStopData"/>
+<entry id="26" method="true" symbol="onPosition"/>
+<entry id="20" module="true" symbol="Layouts"/>
+<entry id="8388642" module="true" symbol="Position"/>
 <entry id="8389125" method="true" symbol="onHide"/>
 <entry id="8390088" module="true" object="true" symbol="JsonData"/>
 <entry id="8389844" symbol="responseType"/>
 <entry id="8389346" symbol="text"/>
+<entry id="16" method="true" symbol="callbackClosestStop"/>
 <entry field="true" id="8389063" symbol="identifier"/>
-<entry id="15" module="true" symbol="Menus"/>
+<entry id="19" module="true" symbol="Menus"/>
 <entry id="8388772" module="true" object="true" symbol="Fonts"/>
-<entry field="true" id="20" symbol="i"/>
-<entry id="12" method="true" symbol="fetchLineStops"/>
+<entry field="true" id="24" symbol="i"/>
 <entry id="11" object="true" symbol="RuterAPI"/>
 </symbolTable>
 <localVars>
-<entry endPc="268435612" name="api" stackId="2" startPc="268435483"/>
-<entry endPc="268435613" name="state" stackId="1" startPc="268435479"/>
-<entry endPc="268435618" name="state" stackId="1" startPc="268435613"/>
-<entry endPc="268435755" name="dc" stackId="1" startPc="268435683"/>
-<entry endPc="268435836" name="dc" stackId="1" startPc="268435760"/>
-<entry endPc="268435983" name="options" stackId="3" startPc="268435845"/>
-<entry endPc="268435983" name="url" stackId="2" startPc="268435845"/>
-<entry endPc="268435983" name="responseCallback" stackId="4" startPc="268435845"/>
-<entry endPc="268435984" name="lineId" stackId="1" startPc="268435841"/>
-<entry endPc="268436123" name="options" stackId="2" startPc="268435988"/>
-<entry endPc="268436123" name="url" stackId="1" startPc="268435988"/>
-<entry endPc="268436123" name="responseCallback" stackId="3" startPc="268435988"/>
-<entry endPc="268436164" name="responseCode" stackId="1" startPc="268436124"/>
-<entry endPc="268436164" name="data" stackId="2" startPc="268436124"/>
-<entry endPc="268436320" name="rez_cmp_local_bitmap_mainLabel" stackId="2" startPc="268436177"/>
-<entry endPc="268436321" name="dc" stackId="1" startPc="268436165"/>
+<entry endPc="268435558" name="state" stackId="1" startPc="268435509"/>
+<entry endPc="268435563" name="state" stackId="1" startPc="268435558"/>
+<entry endPc="268435656" name="loc" stackId="2" startPc="268435609"/>
+<entry endPc="268435657" name="info" stackId="1" startPc="268435605"/>
+<entry endPc="268435752" name="dc" stackId="1" startPc="268435680"/>
+<entry endPc="268435833" name="dc" stackId="1" startPc="268435757"/>
+<entry endPc="268435980" name="options" stackId="3" startPc="268435842"/>
+<entry endPc="268435980" name="url" stackId="2" startPc="268435842"/>
+<entry endPc="268435980" name="responseCallback" stackId="4" startPc="268435842"/>
+<entry endPc="268435981" name="stopid" stackId="1" startPc="268435838"/>
+<entry endPc="268436167" name="options" stackId="5" startPc="268435985"/>
+<entry endPc="268436167" name="url" stackId="4" startPc="268435985"/>
+<entry endPc="268436167" name="responseCallback" stackId="6" startPc="268435985"/>
+<entry endPc="268436167" name="utm" stackId="3" startPc="268435985"/>
+<entry endPc="268436168" name="lat" stackId="1" startPc="268435981"/>
+<entry endPc="268436168" name="lon" stackId="2" startPc="268435981"/>
+<entry endPc="268436354" name="response" stackId="1" startPc="268436168"/>
+<entry endPc="268436354" name="data" stackId="2" startPc="268436168"/>
+<entry endPc="268436394" name="responseCode" stackId="1" startPc="268436354"/>
+<entry endPc="268436394" name="data" stackId="2" startPc="268436354"/>
+<entry endPc="268438551" name="Easting" stackId="4" startPc="268436398"/>
+<entry endPc="268438551" name="Zone" stackId="3" startPc="268436398"/>
+<entry endPc="268438551" name="Northing" stackId="5" startPc="268436398"/>
+<entry endPc="268438552" name="Lat" stackId="1" startPc="268436394"/>
+<entry endPc="268438552" name="Lon" stackId="2" startPc="268436394"/>
+<entry endPc="268438708" name="rez_cmp_local_bitmap_mainLabel" stackId="2" startPc="268438565"/>
+<entry endPc="268438709" name="dc" stackId="1" startPc="268438553"/>
 </localVars>
 <annotations/>
 <functions>
@@ -110,6 +146,10 @@
 <documentation/>
 </functionEntry>
 <functionEntry accessMode="public" name="getInitialView" parent="RuterBussApp">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="onPosition" parent="RuterBussApp">
+<param id="info"/>
 <documentation/>
 </functionEntry>
 <functionEntry accessMode="public" name="initialize" parent="RuterBussView">
@@ -129,16 +169,28 @@
 <functionEntry accessMode="public" name="onHide" parent="RuterBussView">
 <documentation/>
 </functionEntry>
-<functionEntry accessMode="public" name="fetchLineStops" parent="RuterAPI">
-<param id="lineId"/>
+<functionEntry accessMode="public" name="fetchStopData" parent="RuterAPI">
+<param id="stopid"/>
 <documentation/>
 </functionEntry>
 <functionEntry accessMode="public" name="fetchClosestStop" parent="RuterAPI">
+<param id="lat"/>
+<param id="lon"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="callbackClosestStop" parent="RuterAPI">
+<param id="response"/>
+<param id="data"/>
 <documentation/>
 </functionEntry>
 <functionEntry accessMode="public" name="callbackPrint" parent="RuterAPI">
 <param id="responseCode"/>
 <param id="data"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="DegToUTM" parent="RuterAPI">
+<param id="Lat"/>
+<param id="Lon"/>
 <documentation/>
 </functionEntry>
 <functionEntry accessMode="public" name="MainLayout" parent="Layouts">
@@ -149,14 +201,14 @@
 <dataEntryOffsetMappings>
 <dataEntry offset="87" parentId="" symbolId="globals" type="module"/>
 <dataEntry offset="182" parentId="globals" symbolId="RuterAPI" type="class"/>
-<dataEntry offset="253" parentId="globals" symbolId="Rez" type="module"/>
-<dataEntry offset="332" parentId="Rez" symbolId="Drawables" type="module"/>
-<dataEntry offset="371" parentId="Rez" symbolId="Menus" type="module"/>
-<dataEntry offset="402" parentId="Rez" symbolId="Fonts" type="module"/>
-<dataEntry offset="433" parentId="Rez" symbolId="JsonData" type="module"/>
-<dataEntry offset="464" parentId="Rez" symbolId="Layouts" type="module"/>
-<dataEntry offset="503" parentId="Rez" symbolId="Strings" type="module"/>
-<dataEntry offset="542" parentId="globals" symbolId="RuterBussView" type="class"/>
-<dataEntry offset="637" parentId="globals" symbolId="RuterBussApp" type="class"/>
+<dataEntry offset="285" parentId="globals" symbolId="Rez" type="module"/>
+<dataEntry offset="364" parentId="Rez" symbolId="Drawables" type="module"/>
+<dataEntry offset="403" parentId="Rez" symbolId="Menus" type="module"/>
+<dataEntry offset="434" parentId="Rez" symbolId="Fonts" type="module"/>
+<dataEntry offset="465" parentId="Rez" symbolId="JsonData" type="module"/>
+<dataEntry offset="496" parentId="Rez" symbolId="Layouts" type="module"/>
+<dataEntry offset="535" parentId="Rez" symbolId="Strings" type="module"/>
+<dataEntry offset="574" parentId="globals" symbolId="RuterBussView" type="class"/>
+<dataEntry offset="669" parentId="globals" symbolId="RuterBussApp" type="class"/>
 </dataEntryOffsetMappings>
 </debugInfo>

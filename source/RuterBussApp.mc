@@ -12,7 +12,7 @@ class RuterBussApp extends App.AppBase
     function initialize()
     {
         AppBase.initialize();
-        api = new RuterAPI();
+        api = RuterAPI.getReference();
     }
 
     // onStart() is called on application start up
@@ -38,6 +38,7 @@ class RuterBussApp extends App.AppBase
 	    var loc = info.position.toDegrees();
 	    //api.fetchClosestStop(loc[0], loc[1]);
 	  	api.fetchClosestStop(59.910011, 10.680239);
+	  	System.println("YO)" + api.stopDataRetrieveTYo());
 	    
 	}
 

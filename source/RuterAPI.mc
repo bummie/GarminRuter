@@ -1,24 +1,41 @@
 using Toybox.Application as App;
 using Toybox.Communications as Com;
 using Toybox.Math;
+using Toybox.WatchUi as Ui;
 
 class RuterAPI
 {
-	var stopName = null;
-	var stopId = null;
+	private static var api = null;
+	private var BASE_URL = "https://reisapi.ruter.no/";
+	public var stopName = "";
+	private var stopId = "";
+	public var stopDataString = "";
+	
+	hidden var options =
+			  	{
+			  		:method => Com.HTTP_REQUEST_METHOD_GET,
+			   		:headers => {"Content-Type" => Com.HTTP_RESPONSE_CONTENT_TYPE_JSON},
+			    	:responseType => Com.HTTP_RESPONSE_CONTENT_TYPE_JSON
+			  	};
+	
+	hidden function initialize( ) 
+	{
+    }
+	
+	static function getReference()
+	{
+		if(api == null){ api = new RuterAPI();}
+		
+		return api;
+	}
 	
 	// Returns the stops for given line
 	function fetchStopData(stopid) 
 	{
-	  	var url = "https://reisapi.ruter.no/StopVisit/GetDepartures/" + stopid;
-	  	var options =
-	  	{
-	  		:method => Com.HTTP_REQUEST_METHOD_GET,
-	   		:headers => {"Content-Type" => Com.HTTP_RESPONSE_CONTENT_TYPE_JSON},
-	    	:responseType => Com.HTTP_RESPONSE_CONTENT_TYPE_JSON
-	  	};
-	
-		var responseCallback = method(:callbackPrint);                  
+	  	var url = "https://bevster.net/GarminRuter/?id=" + stopid;
+	  	System.println(url);
+		var responseCallback = method(:callbackPrint);   
+		               
 	    Com.makeWebRequest(url, {}, options, responseCallback);
 	}
 	
@@ -26,18 +43,13 @@ class RuterAPI
 	function fetchClosestStop(lat, lon)
 	{
 		var utm = DegToUTM(lat, lon);
-		var url = "https://reisapi.ruter.no/Place/GetClosestStops?coordinates=(x=" + utm["east"] + ",y=" + utm["north"] + ")";
-	  	var options =
-	  	{
-	  		:method => Com.HTTP_REQUEST_METHOD_GET,
-	   		:headers => {"Content-Type" => Com.HTTP_RESPONSE_CONTENT_TYPE_JSON},
-	    	:responseType => Com.HTTP_RESPONSE_CONTENT_TYPE_JSON
-	  	};
-	
-		var responseCallback = method(:callbackClosestStop);                  
+		var url = BASE_URL + "Place/GetClosestStops?coordinates=(x=" + utm["east"] + ",y=" + utm["north"] + ")";
+		var responseCallback = method(:callbackClosestStop);       
+		           
 	    Com.makeWebRequest(url, {}, options, responseCallback);
 	}
 	
+	// Gets the response about closest stop and retrieves data from given stop
 	function callbackClosestStop(response, data)
 	{
 		if(response == 200)
@@ -58,9 +70,23 @@ class RuterAPI
 	
 	function callbackPrint(responseCode, data)
 	{
-		for(var i = 0; i < data.size(); i++)
+		if(responseCode == 200)
 		{
-			System.println(responseCode + " : " + data[i]["MonitoredVehicleJourney"]["MonitoredCall"]["DestinationDisplay"] + " - " + data[i]["MonitoredVehicleJourney"]["MonitoredCall"]["ExpectedArrivalTime"] );
+			if(data != null && data.size() > 0)
+			{
+				for(var i = 0; i < data.size(); i++)
+				{
+					System.println(responseCode + " : " + data[i]["name"] + " - " + data[i]["line"] + " - " + data[i]["arrival"]);
+					stopDataString = stopDataString + data[i]["name"] + "\n" + data[i]["line"] + ": " + data[i]["arrival"] + "\n";
+				}
+				Ui.requestUpdate();
+				Ui.requestUpdate();
+				
+			}
+		}
+		else
+		{
+			System.println( responseCode +  " :Something went wrong!");
 		}
 	}
 	
@@ -79,5 +105,10 @@ class RuterAPI
        				"east" => Easting.toNumber(),
        				"north" => Northing.toNumber()
        			};
+	}
+	
+	function stopDataRetrieveTYo()
+	{
+		return stopDataString;
 	}
 }

@@ -3,18 +3,21 @@ using Toybox.WatchUi as Ui;
 class RuterBussView extends Ui.View 
 {
 
-	var label;
-	var i = 0;
+	var labelData;
+	var labelTitle;
+	var api;
     function initialize() 
     {
         View.initialize();
+        api = RuterAPI.getReference();
     }
 
     // Load your resources here
     function onLayout(dc)
     {
         setLayout(Rez.Layouts.MainLayout(dc));
-    	label = View.findDrawableById("mainLabel");
+    	labelData = View.findDrawableById("mainLabel");
+    	labelTitle = View.findDrawableById("titleLabel");
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -26,12 +29,12 @@ class RuterBussView extends Ui.View
 
     // Update the view
     function onUpdate(dc)
-     {
-        // Call the parent onUpdate function to redraw the layout
-       	label.setText("I: " + i);
-       	i++;
+    {
+        View.onUpdate(dc);
+        
+        labelTitle.setText(api.stopName);
+       	labelData.setText(api.stopDataString);
        	
-       	View.onUpdate(dc);
     }
 
     // Called when this View is removed from the screen. Save the

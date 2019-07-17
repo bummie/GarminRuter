@@ -2,14 +2,14 @@ using Toybox.WatchUi as Ui;
 
 class RuterBussView extends Ui.View 
 {
-
 	var labelData;
 	var labelTitle;
 	var api;
+
     function initialize() 
     {
         View.initialize();
-        api = RuterAPI.getReference();
+        api = RuterAPI.GetReference();
     }
 
     // Load your resources here

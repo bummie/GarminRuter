@@ -5,19 +5,18 @@ using Toybox.Position;
 using Toybox.System;
 
 class RuterBussApp extends App.AppBase
- {
-	
+{
 	var api;
 	
     function initialize()
     {
         AppBase.initialize();
-        api = RuterAPI.getReference();
     }
 
     // onStart() is called on application start up
     function onStart(state)
     {
+        api = RuterAPI.GetReference();
     	Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
     }
 
@@ -37,9 +36,7 @@ class RuterBussApp extends App.AppBase
 	{
 	    var loc = info.position.toDegrees();
 	    //api.fetchClosestStop(loc[0], loc[1]);
-	  	api.fetchClosestStop(59.910011, 10.680239);
-	  	System.println("YO)" + api.stopDataRetrieveTYo());
-	    
+	  	//api.FetchClosestStop(59.910011, 10.680239);
+	  	System.println("YO: " + loc[0] + ", " + loc[1]);
 	}
-
 }

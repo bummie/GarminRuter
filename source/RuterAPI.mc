@@ -25,7 +25,7 @@ class RuterAPI
 	// Returns the closest stops for a given position
 	function FetchClosestStops(latitude, longitude) 
 	{		  	
-		System.println("Making web request");
+		System.println("Fetching closest stops.");
 	    Com.makeWebRequest(URL, RequestClosestStops(latitude, longitude), options, method(:CallbackClosestStops));
 	}
 
@@ -41,6 +41,23 @@ class RuterAPI
 			_closestStops[i] = nodes[i]["node"]["place"]["id"];
 			System.println(i + ": " + _closestStops[i]);
 		}
+
+		FetchStopData(_closestStops[0]);
+	}
+	
+	function FetchStopData(stopID)
+	{
+		if(stopID == "") { System.println("StopID cannot be empty."); return; }
+	
+		System.println("Fetching stop data: " + stopID);
+	    Com.makeWebRequest(URL, RequestStopData(stopID), options, method(:CallbackStopData));
+	}
+
+	function CallbackStopData(responseCode, data)
+	{
+		if(!ValidData(responseCode, data)) { return; }
+		
+		System.println(data);
 	}
 	
 	private function ValidData(responseCode, data)
@@ -65,6 +82,13 @@ class RuterAPI
 	private function RequestClosestStops(latitude, longitude)
 	{
 		var jsonRequest = "{nearest(latitude:" + latitude + ", longitude:" + longitude + ", filterByPlaceTypes: stopPlace){edges{node{place{id}}}}}";
+		return CreateRequest(jsonRequest);
+	}
+
+	private function RequestStopData(stopID)
+	{
+		var jsonRequest = "{stopPlace(id:\""+ stopID + "\"){name,estimatedCalls{expectedArrivalTime,destinationDisplay{frontText}}}}";
+		System.println(jsonRequest);
 		return CreateRequest(jsonRequest);
 	}
 }

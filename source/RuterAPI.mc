@@ -37,6 +37,11 @@ class RuterAPI
 
 		System.println("Data received: " + data);
 	}
+
+	hidden function CreateGraphQLRequest(request)
+	{
+		return 
+	}
 	
 	// Converts Degrees to UTM coordinates
 	function DegToUTM(Lat, Lon)

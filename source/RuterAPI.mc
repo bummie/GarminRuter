@@ -10,6 +10,7 @@ class RuterAPI
 	private var _closestStopIDs = [];
 	private var _closestStopNames = [];
 	private var _stopData;
+	public var _hasLoaded = false;
 
 	private var options =	
 	{
@@ -27,6 +28,7 @@ class RuterAPI
 	// Returns the closest stops for a given position
 	function FetchClosestStops(latitude, longitude) 
 	{		  	
+		_hasLoaded = false;
 		System.println("Fetching closest stops.");
 	    Com.makeWebRequest(URL, RequestClosestStops(latitude, longitude), options, method(:CallbackClosestStops));
 	}
@@ -63,6 +65,7 @@ class RuterAPI
 		
 		_stopData = data;
 		System.println(data);
+		_hasLoaded = true;
 	}
 
 	function FetchStopNames(stopIDs)
@@ -85,6 +88,9 @@ class RuterAPI
 			_closestStopNames[i] = nodes[i]["name"];
 			System.println(i + ": " + _closestStopNames[i]);
 		}
+
+		var menu = new MenuView();
+        menu.OpenMenu(_closestStopNames);
 	}
 	
 	private function ValidData(responseCode, data)
@@ -132,5 +138,15 @@ class RuterAPI
 	private function CreateRequest(request)
 	{
 		return { "query" => request};
+	}
+
+	function GetStopNames()
+	{
+		return _closestStopNames;
+	}
+
+	function HasLoaded()
+	{
+		return _hasLoaded;
 	}
 }

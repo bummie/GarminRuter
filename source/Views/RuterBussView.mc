@@ -2,22 +2,23 @@ using Toybox.WatchUi as Ui;
 
 class RuterBussView extends Ui.View 
 {
-	var labelData;
-	var labelTitle;
-	var api;
+	var _labelData;
+	var _labelTitle;
+	var _api;
+    var _menuShown = false;
 
     function initialize() 
     {
         View.initialize();
-        api = RuterAPI.GetReference();
+        _api = RuterAPI.GetReference();
     }
 
     // Load your resources here
     function onLayout(dc)
     {
         setLayout(Rez.Layouts.MainLayout(dc));
-    	labelData = View.findDrawableById("mainLabel");
-    	labelTitle = View.findDrawableById("titleLabel");
+    	_labelData = View.findDrawableById("mainLabel");
+    	_labelTitle = View.findDrawableById("titleLabel");
     }
 
     // Called when this View is brought to the foreground. Restore

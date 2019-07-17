@@ -6,15 +6,13 @@ using Toybox.WatchUi as Ui;
 class RuterAPI
 {
 	private static var api = null;
-	private var BASE_URL = "https://reisapi.ruter.no/";
-	public var stopName = "";
-	private var stopId = "";
-	public var stopDataString = "";
+	private var URL = "https://api.entur.io/journey-planner/v2/graphql";
+	private var JSON_REQUEST_CLOSEST_STOP = { "query" => "{stopPlace(id: \\\"NSR:StopPlace:4370\\\"){ name }}"};
 	
-	hidden var options =
+	hidden var options =	
 	{
-		:method => Com.HTTP_REQUEST_METHOD_GET,
-		:headers => {"Content-Type" => Com.HTTP_RESPONSE_CONTENT_TYPE_JSON},
+		:method => Com.HTTP_REQUEST_METHOD_POST,
+		:headers => {"Content-Type" => Com.REQUEST_CONTENT_TYPE_JSON},
 		:responseType => Com.HTTP_RESPONSE_CONTENT_TYPE_JSON
 	};
 	
@@ -24,59 +22,20 @@ class RuterAPI
 		return api;
 	}
 	
-	// Returns the stops for given line
-	function FetchStopData(stopid) 
-	{
-	  	var url = "https://bevster.net/GarminRuter/?id=" + stopid;
-	  	System.println(url);
-		var responseCallback = method(:CallbackPrint);   
-		               
-	    Com.makeWebRequest(url, {}, options, responseCallback);
-	}
-	
-	// Fetches the closest stop by position
-	function FetchClosestStop(lat, lon)
-	{
-		var utm = DegToUTM(lat, lon);
-		var url = BASE_URL + "Place/GetClosestStops?coordinates=(x=" + utm["east"] + ",y=" + utm["north"] + ")";
-		var responseCallback = method(:CallbackClosestStop);       
-		           
-	    Com.makeWebRequest(url, {}, options, responseCallback);
-	}
-	
-	// Gets the response about closest stop and retrieves data from given stop
-	function CallbackClosestStop(response, data)
-	{
-		if(response == 200)
-		{
-			if(data != null && data.size() > 0)
-			{
-				stopName = data[0]["Name"];
-				stopId = data[0]["ID"];
-				System.println("Stoppested: " + stopName + " ID: "  + stopId);
-				FetchStopData(stopId);
-			}
-		}
-		else
-		{
-			System.println("Something went wrong!");
-		}
+	// Returns the closest stops for a given position
+	function FetchClosestStop(latitude, longitude) 
+	{		  
+		System.println("Making web request");
+		System.println(JSON_REQUEST_CLOSEST_STOP);	
+	    Com.makeWebRequest(URL, JSON_REQUEST_CLOSEST_STOP, options, method(:CallbackPrint));
 	}
 	
 	function CallbackPrint(responseCode, data)
 	{
-		if(responseCode != 200) { System.println( responseCode +  " :Something went wrong!"); }
-		
-		if(data != null && data.size() > 0)
-		{
-			for(var i = 0; i < data.size(); i++)
-			{
-				System.println(responseCode + " : " + data[i]["name"] + " - " + data[i]["line"] + " - " + data[i]["arrival"]);
-				stopDataString = stopDataString + data[i]["name"] + "\n" + data[i]["line"] + ": " + data[i]["arrival"] + "\n";
-			}
-			Ui.requestUpdate();
-			Ui.requestUpdate();	
-		}
+		if(responseCode != 200) { System.println( responseCode +  " : Could not retrieve data."); }
+		if(data == null || data.size() <= 0) { System.println("Data received is empty."); }
+
+		System.println("Data received: " + data);
 	}
 	
 	// Converts Degrees to UTM coordinates
@@ -94,10 +53,5 @@ class RuterAPI
        				"east" => easting.toNumber(),
     				"north" => northing.toNumber()
        			};
-	}
-	
-	function StopDataRetrieveTYo()
-	{
-		return stopDataString;
 	}
 }

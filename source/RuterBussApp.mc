@@ -18,6 +18,8 @@ class RuterBussApp extends App.AppBase
     {
         api = RuterAPI.GetReference();
     	Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
+        System.println("App started...");
+        api.FetchClosestStop(0, 0);
     }
 
     // onStop() is called when your application is exiting

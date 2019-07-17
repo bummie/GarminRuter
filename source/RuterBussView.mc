@@ -31,10 +31,6 @@ class RuterBussView extends Ui.View
     function onUpdate(dc)
     {
         View.onUpdate(dc);
-        
-        labelTitle.setText(api.stopName);
-       	labelData.setText(api.stopDataString);
-       	
     }
 
     // Called when this View is removed from the screen. Save the

@@ -6,10 +6,12 @@ using Toybox.WatchUi as Ui;
 class RuterAPI
 {
 	private static var api = null;
-	private var URL = "https://api.entur.io/journey-planner/v2/graphql";
-	private var JSON_REQUEST_CLOSEST_STOP = { "query" => "{stopPlace(id: \\\"NSR:StopPlace:4370\\\"){ name }}"};
-	
-	hidden var options =	
+	private var URL = "https://api.entur.io/journey-planner/v2/graphql";	
+	private var _closestStopIDs = [];
+	private var _closestStopNames = [];
+	private var _stopData;
+
+	private var options =	
 	{
 		:method => Com.HTTP_REQUEST_METHOD_POST,
 		:headers => {"Content-Type" => Com.REQUEST_CONTENT_TYPE_JSON},
@@ -23,35 +25,112 @@ class RuterAPI
 	}
 	
 	// Returns the closest stops for a given position
-	function FetchClosestStop(latitude, longitude) 
-	{		  
-		System.println("Making web request");
-		System.println(JSON_REQUEST_CLOSEST_STOP);	
-	    Com.makeWebRequest(URL, JSON_REQUEST_CLOSEST_STOP, options, method(:CallbackPrint));
+	function FetchClosestStops(latitude, longitude) 
+	{		  	
+		System.println("Fetching closest stops.");
+	    Com.makeWebRequest(URL, RequestClosestStops(latitude, longitude), options, method(:CallbackClosestStops));
+	}
+
+	function CallbackClosestStops(responseCode, data)
+	{
+		if(!ValidData(responseCode, data)) { return; }
+		
+		var nodes = data["data"]["nearest"]["edges"]; //TODO:: Check if nodes has size greater than 0	
+		_closestStopIDs = new[nodes.size()];
+		
+		for(var i = 0; i < nodes.size(); i++)
+		{
+			_closestStopIDs[i] = nodes[i]["node"]["place"]["id"];
+			System.println(i + ": " + _closestStopIDs[i]);
+		}
+
+		FetchStopData(_closestStopIDs[0]);
+		FetchStopNames(_closestStopIDs);
+		//System.println("Stopnames: " + RequestStopNames(_closestStopIDs));
 	}
 	
+	function FetchStopData(stopID)
+	{
+		if(stopID == "") { System.println("StopID cannot be empty."); return; }
+	
+		System.println("Fetching stop data: " + stopID);
+	    Com.makeWebRequest(URL, RequestStopData(stopID), options, method(:CallbackStopData));
+	}
+
+	function CallbackStopData(responseCode, data)
+	{
+		if(!ValidData(responseCode, data)) { return; }
+		
+		_stopData = data;
+		System.println(data);
+	}
+
+	function FetchStopNames(stopIDs)
+	{
+		if(stopIDs.size() <= 0) { System.println("StopIDs cannot be empty."); return; }
+	
+		System.println("Fetching stop names.");
+	    Com.makeWebRequest(URL, RequestStopNames(stopIDs), options, method(:CallbackStopNames));
+	}
+
+	function CallbackStopNames(responseCode, data)
+	{
+		if(!ValidData(responseCode, data)) { return; }
+		
+		var nodes = data["data"]["stopPlaces"]; //TODO:: Check if nodes has size greater than 0	
+		_closestStopNames = new[nodes.size()];
+		
+		for(var i = 0; i < nodes.size(); i++)
+		{
+			_closestStopNames[i] = nodes[i]["name"];
+			System.println(i + ": " + _closestStopNames[i]);
+		}
+	}
+	
+	private function ValidData(responseCode, data)
+	{
+		if(responseCode != 200) { System.println( responseCode +  " : Could not retrieve data."); return false; }
+		if(data == null || data.size() <= 0) { System.println("Data received is empty."); return false;}
+		return true;
+	}
+
 	function CallbackPrint(responseCode, data)
 	{
-		if(responseCode != 200) { System.println( responseCode +  " : Could not retrieve data."); }
-		if(data == null || data.size() <= 0) { System.println("Data received is empty."); }
-
-		System.println("Data received: " + data);
-	}
-	
-	// Converts Degrees to UTM coordinates
-	function DegToUTM(Lat, Lon)
-	{
-		var zone = Math.floor(Lon/6+31);
+		if(!ValidData(responseCode, data)) { return; }
 		
-		var easting = 0.5*Math.log((1+Math.cos(Lat*Math.PI/180)*Math.sin(Lon*Math.PI/180-(6*zone-183)*Math.PI/180))/(1-Math.cos(Lat*Math.PI/180)*Math.sin(Lon*Math.PI/180-(6*zone-183)*Math.PI/180)), Math.E)*0.9996*6399593.62/Math.pow((1+Math.pow(0.0820944379, 2)*Math.pow(Math.cos(Lat*Math.PI/180), 2)), 0.5)*(1 + Math.pow(0.0820944379,2)/2*Math.pow((0.5*Math.log((1+Math.cos(Lat*Math.PI/180)*Math.sin(Lon*Math.PI/180-(6*zone-183)*Math.PI/180))/(1-Math.cos(Lat*Math.PI/180)*Math.sin(Lon*Math.PI/180-(6*zone-183)*Math.PI/180)), Math.E)),2)*Math.pow(Math.cos(Lat*Math.PI/180),2)/3)+500000;
-		easting = Math.round(easting*100)*0.01;
-		       
-		var northing = (Math.atan(Math.tan(Lat*Math.PI/180)/Math.cos((Lon*Math.PI/180-(6*zone -183)*Math.PI/180)))-Lat*Math.PI/180)*0.9996*6399593.625/Math.sqrt(1+0.006739496742*Math.pow(Math.cos(Lat*Math.PI/180),2))*(1+0.006739496742/2*Math.pow(0.5*Math.log((1+Math.cos(Lat*Math.PI/180)*Math.sin((Lon*Math.PI/180-(6*zone -183)*Math.PI/180)))/(1-Math.cos(Lat*Math.PI/180)*Math.sin((Lon*Math.PI/180-(6*zone -183)*Math.PI/180))), Math.E),2)*Math.pow(Math.cos(Lat*Math.PI/180),2))+0.9996*6399593.625*(Lat*Math.PI/180-0.005054622556*(Lat*Math.PI/180+Math.sin(2*Lat*Math.PI/180)/2)+4.258201531e-05*(3*(Lat*Math.PI/180+Math.sin(2*Lat*Math.PI/180)/2)+Math.sin(2*Lat*Math.PI/180)*Math.pow(Math.cos(Lat*Math.PI/180),2))/4-1.674057895e-07*(5*(3*(Lat*Math.PI/180+Math.sin(2*Lat*Math.PI/180)/2)+Math.sin(2*Lat*Math.PI/180)*Math.pow(Math.cos(Lat*Math.PI/180),2))/4+Math.sin(2*Lat*Math.PI/180)*Math.pow(Math.cos(Lat*Math.PI/180),2)*Math.pow(Math.cos(Lat*Math.PI/180),2))/3);
-		northing = Math.round(northing*100)*0.01;
+		System.println( responseCode + ": Data received: " + data);
+	}
 
-       return	{ 	
-       				"east" => easting.toNumber(),
-    				"north" => northing.toNumber()
-       			};
+	private function RequestClosestStops(latitude, longitude)
+	{
+		var jsonRequest = "{nearest(latitude:" + latitude + ",longitude:" + longitude + ",maximumDistance:300,filterByPlaceTypes:stopPlace,filterByModes:bus){edges{node{place{id}}}}}";
+		return CreateRequest(jsonRequest);
+	}
+
+	private function RequestStopData(stopID)
+	{
+		var jsonRequest = "{stopPlace(id:\\\""+ stopID + "\\\"){name,estimatedCalls{expectedArrivalTime,destinationDisplay{frontText}}}}";
+		return CreateRequest(jsonRequest);
+	}
+
+	private function RequestStopNames(stopIDs)
+	{
+		if(stopIDs.size() <= 0) { System.println("StopIDs are empty."); return; }
+
+		var formattedStopIDs = "";
+
+		for(var i = 0; i < stopIDs.size(); i++)
+		{
+			formattedStopIDs += "\\\""+ stopIDs[i] + "\\\"";
+			if(i < stopIDs.size()-1) { formattedStopIDs += ","; }
+		}
+
+		var jsonRequest = "{stopPlaces(ids:[" + formattedStopIDs + "]){name}}";
+		return CreateRequest(jsonRequest);
+	}
+
+	private function CreateRequest(request)
+	{
+		return { "query" => request};
 	}
 }

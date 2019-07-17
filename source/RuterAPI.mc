@@ -7,7 +7,9 @@ class RuterAPI
 {
 	private static var api = null;
 	private var URL = "https://api.entur.io/journey-planner/v2/graphql";	
-	private var _closestStops = [];
+	private var _closestStopIDs = [];
+	private var _closestStopNames = [];
+	private var _stopData;
 
 	private var options =	
 	{
@@ -34,15 +36,17 @@ class RuterAPI
 		if(!ValidData(responseCode, data)) { return; }
 		
 		var nodes = data["data"]["nearest"]["edges"]; //TODO:: Check if nodes has size greater than 0	
-		_closestStops = new[nodes.size()];
+		_closestStopIDs = new[nodes.size()];
 		
 		for(var i = 0; i < nodes.size(); i++)
 		{
-			_closestStops[i] = nodes[i]["node"]["place"]["id"];
-			System.println(i + ": " + _closestStops[i]);
+			_closestStopIDs[i] = nodes[i]["node"]["place"]["id"];
+			System.println(i + ": " + _closestStopIDs[i]);
 		}
 
-		FetchStopData(_closestStops[0]);
+		FetchStopData(_closestStopIDs[0]);
+		FetchStopNames(_closestStopIDs);
+		//System.println("Stopnames: " + RequestStopNames(_closestStopIDs));
 	}
 	
 	function FetchStopData(stopID)
@@ -57,7 +61,30 @@ class RuterAPI
 	{
 		if(!ValidData(responseCode, data)) { return; }
 		
+		_stopData = data;
 		System.println(data);
+	}
+
+	function FetchStopNames(stopIDs)
+	{
+		if(stopIDs.size() <= 0) { System.println("StopIDs cannot be empty."); return; }
+	
+		System.println("Fetching stop names.");
+	    Com.makeWebRequest(URL, RequestStopNames(stopIDs), options, method(:CallbackStopNames));
+	}
+
+	function CallbackStopNames(responseCode, data)
+	{
+		if(!ValidData(responseCode, data)) { return; }
+		
+		var nodes = data["data"]["stopPlaces"]; //TODO:: Check if nodes has size greater than 0	
+		_closestStopNames = new[nodes.size()];
+		
+		for(var i = 0; i < nodes.size(); i++)
+		{
+			_closestStopNames[i] = nodes[i]["name"];
+			System.println(i + ": " + _closestStopNames[i]);
+		}
 	}
 	
 	private function ValidData(responseCode, data)
@@ -74,21 +101,36 @@ class RuterAPI
 		System.println( responseCode + ": Data received: " + data);
 	}
 
-	private function CreateRequest(request)
-	{
-		return { "query" => request};
-	}
-
 	private function RequestClosestStops(latitude, longitude)
 	{
-		var jsonRequest = "{nearest(latitude:" + latitude + ", longitude:" + longitude + ", filterByPlaceTypes: stopPlace){edges{node{place{id}}}}}";
+		var jsonRequest = "{nearest(latitude:" + latitude + ",longitude:" + longitude + ",maximumDistance:300,filterByPlaceTypes:stopPlace,filterByModes:bus){edges{node{place{id}}}}}";
 		return CreateRequest(jsonRequest);
 	}
 
 	private function RequestStopData(stopID)
 	{
-		var jsonRequest = "{stopPlace(id:\""+ stopID + "\"){name,estimatedCalls{expectedArrivalTime,destinationDisplay{frontText}}}}";
-		System.println(jsonRequest);
+		var jsonRequest = "{stopPlace(id:\\\""+ stopID + "\\\"){name,estimatedCalls{expectedArrivalTime,destinationDisplay{frontText}}}}";
 		return CreateRequest(jsonRequest);
+	}
+
+	private function RequestStopNames(stopIDs)
+	{
+		if(stopIDs.size() <= 0) { System.println("StopIDs are empty."); return; }
+
+		var formattedStopIDs = "";
+
+		for(var i = 0; i < stopIDs.size(); i++)
+		{
+			formattedStopIDs += "\\\""+ stopIDs[i] + "\\\"";
+			if(i < stopIDs.size()-1) { formattedStopIDs += ","; }
+		}
+
+		var jsonRequest = "{stopPlaces(ids:[" + formattedStopIDs + "]){name}}";
+		return CreateRequest(jsonRequest);
+	}
+
+	private function CreateRequest(request)
+	{
+		return { "query" => request};
 	}
 }

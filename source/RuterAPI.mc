@@ -7,7 +7,7 @@ class RuterAPI
 {
 	private static var api = null;
 	private var URL = "https://api.entur.io/journey-planner/v2/graphql";
-	private var JSON_REQUEST_CLOSEST_STOP = { "query" => "{stopPlace(id: \\\"NSR:StopPlace:4370\\\"){ name }}"};
+	private var JSON_REQUEST_CLOSEST_STOP = "{stopPlace(id: \\\"NSR:StopPlace:4370\\\"){ name }}";
 	
 	hidden var options =	
 	{
@@ -27,7 +27,7 @@ class RuterAPI
 	{		  
 		System.println("Making web request");
 		System.println(JSON_REQUEST_CLOSEST_STOP);	
-	    Com.makeWebRequest(URL, JSON_REQUEST_CLOSEST_STOP, options, method(:CallbackPrint));
+	    Com.makeWebRequest(URL, CreateRequest(JSON_REQUEST_CLOSEST_STOP), options, method(:CallbackPrint));
 	}
 	
 	function CallbackPrint(responseCode, data)
@@ -35,12 +35,12 @@ class RuterAPI
 		if(responseCode != 200) { System.println( responseCode +  " : Could not retrieve data."); }
 		if(data == null || data.size() <= 0) { System.println("Data received is empty."); }
 
-		System.println("Data received: " + data);
+		System.println( responseCode + ": Data received: " + data);
 	}
 
-	hidden function CreateGraphQLRequest(request)
+	hidden function CreateRequest(request)
 	{
-		return 
+		return { "query" => request};
 	}
 	
 	// Converts Degrees to UTM coordinates

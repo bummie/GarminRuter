@@ -19,7 +19,7 @@ class RuterBussApp extends App.AppBase
         api = RuterAPI.GetReference();
     	Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
         System.println("App started...");
-        api.FetchClosestStop(0, 0);
+        api.FetchClosestStops(59.910011, 10.680239);
     }
 
     // onStop() is called when your application is exiting
@@ -37,8 +37,6 @@ class RuterBussApp extends App.AppBase
 	function onPosition(info) 
 	{
 	    var loc = info.position.toDegrees();
-	    //api.fetchClosestStop(loc[0], loc[1]);
-	  	//api.FetchClosestStop(59.910011, 10.680239);
-	  	System.println("YO: " + loc[0] + ", " + loc[1]);
+	  	System.println("Received position: " + loc[0] + ", " + loc[1]);
 	}
 }

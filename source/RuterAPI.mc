@@ -12,6 +12,8 @@ class RuterAPI
 	private var _stopData;
 	public var _hasLoaded = false;
 
+	private var _lastLocation;
+
 	private var options =	
 	{
 		:method => Com.HTTP_REQUEST_METHOD_POST,
@@ -26,16 +28,17 @@ class RuterAPI
 	}
 	
 	// Returns the closest stops for a given position
-	function FetchClosestStops(latitude, longitude) 
+	function FetchClosestStops(location) 
 	{		  	
 		_hasLoaded = false;
+		_lastLocation = location;
 		System.println("Fetching closest stops.");
-	    Com.makeWebRequest(URL, RequestClosestStops(latitude, longitude), options, method(:CallbackClosestStops));
+	    Com.makeWebRequest(URL, RequestClosestStops(location["latitude"], location["longitude"]), options, method(:CallbackClosestStops));
 	}
 
 	function CallbackClosestStops(responseCode, data)
 	{
-		if(!ValidData(responseCode, data)) { return; }
+		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchClosestStops(_lastLocation); return; }
 		
 		var nodes = data["data"]["nearest"]["edges"]; //TODO:: Check if nodes has size greater than 0	
 		_closestStopIDs = new[nodes.size()];
@@ -78,7 +81,7 @@ class RuterAPI
 
 	function CallbackStopNames(responseCode, data)
 	{
-		if(!ValidData(responseCode, data)) { return; }
+		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchStopNames(_closestStopIDs); return; }
 		
 		var nodes = data["data"]["stopPlaces"]; //TODO:: Check if nodes has size greater than 0	
 		_closestStopNames = new[nodes.size()];

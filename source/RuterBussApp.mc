@@ -20,7 +20,7 @@ class RuterBussApp extends App.AppBase
     	Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
         System.println("App started...");
         
-        api.FetchClosestStops(59.910011, 10.680239);
+        api.FetchClosestStops({"latitude" => 59.910011, "longitude" => 10.680239});
         //api.FetchClosestStops(59.91439857093467, 10.733748436295173); 
     }
 

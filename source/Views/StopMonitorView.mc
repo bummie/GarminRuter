@@ -6,6 +6,7 @@ class StopMonitorView extends WatchUi.View
 {
     private var _api; 
     private var _stopName;
+    private var _stopId;
     var _thickness = 7;
 
     function initialize(stopId, name) 
@@ -14,6 +15,7 @@ class StopMonitorView extends WatchUi.View
         _api = RuterAPI.GetReference();
         _api.FetchStopData(stopId);
         _stopName = name;
+        _stopId = stopId;
     }
 
     // Load your resources here
@@ -167,17 +169,20 @@ class StopMonitorDelegate extends WatchUi.InputDelegate
         switch(keyEvent.getKey())
         {
             case keyEvent.KEY_UP:
-                System.println("Up");
                 _api.FlipPage(1);
             break;
             
             case keyEvent.KEY_DOWN:
-                System.println("Down");
                 _api.FlipPage(0);
             break;  
 
             case keyEvent.KEY_ENTER:
                 System.println("Enter");
+                _api.FetchStopData(_api.GetLastStopId());
+            break;
+
+            case keyEvent.KEY_ESC:
+                WatchUi.popView(WatchUi.SLIDE_IMMEDIATE);
             break;
         }
         

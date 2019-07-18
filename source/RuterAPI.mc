@@ -14,6 +14,7 @@ class RuterAPI
 	public var _hasLoaded = false;
 	private var _pageIndex = 0;
 	private var _pageLimit = 10;
+	private var _lastStopId;
 
 	private var options =	
 	{
@@ -57,7 +58,8 @@ class RuterAPI
 	function FetchStopData(stopID)
 	{
 		if(stopID == "") { System.println("StopID cannot be empty."); return; }
-	
+
+		_lastStopId = stopID;
 		System.println("Fetching stop data: " + stopID);
 	    Com.makeWebRequest(URL, RequestStopData(stopID), options, method(:CallbackStopData));
 	}
@@ -200,5 +202,10 @@ class RuterAPI
 	function GetPage()
 	{
 		return _pageIndex;
+	}
+
+	function GetLastStopId()
+	{
+		return _lastStopId;
 	}
 }

@@ -1,24 +1,20 @@
 using Toybox.WatchUi as Ui;
 
-class RuterBussView extends Ui.View 
+class StopMonitorView extends Ui.View 
 {
-	var _labelData;
-	var _labelTitle;
-	var _api;
-    var _menuShown = false;
+    var _api; 
 
-    function initialize() 
+    function initialize(stopId) 
     {
         View.initialize();
         _api = RuterAPI.GetReference();
+        _api.FetchStopData(stopId);
     }
 
     // Load your resources here
     function onLayout(dc)
     {
-        setLayout(Rez.Layouts.MainLayout(dc));
-    	_labelData = View.findDrawableById("mainLabel");
-    	_labelTitle = View.findDrawableById("titleLabel");
+        setLayout(Rez.Layouts.StopMonitorLayout(dc));
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -26,6 +22,7 @@ class RuterBussView extends Ui.View
     // loading resources into memory.
     function onShow()
     {
+
     }
 
     // Update the view

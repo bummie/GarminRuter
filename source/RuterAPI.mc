@@ -9,7 +9,11 @@ class RuterAPI
 	private var URL = "https://api.entur.io/journey-planner/v2/graphql";	
 	private var _closestStopIDs = [];
 	private var _closestStopNames = [];
+	private var _closestStops = {};
 	private var _stopData;
+	private var _lastLocation;
+	private var _selectedStopIndex = -1;
+	public var _hasLoaded = false;
 
 	private var options =	
 	{
@@ -25,26 +29,27 @@ class RuterAPI
 	}
 	
 	// Returns the closest stops for a given position
-	function FetchClosestStops(latitude, longitude) 
+	function FetchClosestStops(location) 
 	{		  	
+		_hasLoaded = false;
+		_lastLocation = location;
 		System.println("Fetching closest stops.");
-	    Com.makeWebRequest(URL, RequestClosestStops(latitude, longitude), options, method(:CallbackClosestStops));
+	    Com.makeWebRequest(URL, RequestClosestStops(location["latitude"], location["longitude"]), options, method(:CallbackClosestStops));
 	}
 
 	function CallbackClosestStops(responseCode, data)
 	{
-		if(!ValidData(responseCode, data)) { return; }
+		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchClosestStops(_lastLocation); return; }
 		
 		var nodes = data["data"]["nearest"]["edges"]; //TODO:: Check if nodes has size greater than 0	
-		_closestStopIDs = new[nodes.size()];
-		
+		_closestStopIDs = new [nodes.size()];
+
 		for(var i = 0; i < nodes.size(); i++)
 		{
 			_closestStopIDs[i] = nodes[i]["node"]["place"]["id"];
 			System.println(i + ": " + _closestStopIDs[i]);
 		}
 
-		FetchStopData(_closestStopIDs[0]);
 		FetchStopNames(_closestStopIDs);
 		//System.println("Stopnames: " + RequestStopNames(_closestStopIDs));
 	}
@@ -63,6 +68,7 @@ class RuterAPI
 		
 		_stopData = data;
 		System.println(data);
+		_hasLoaded = true;
 	}
 
 	function FetchStopNames(stopIDs)
@@ -75,16 +81,25 @@ class RuterAPI
 
 	function CallbackStopNames(responseCode, data)
 	{
-		if(!ValidData(responseCode, data)) { return; }
+		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchStopNames(_closestStopIDs); return; }
 		
 		var nodes = data["data"]["stopPlaces"]; //TODO:: Check if nodes has size greater than 0	
-		_closestStopNames = new[nodes.size()];
 		
+		_closestStops = new [nodes.size()];
+
 		for(var i = 0; i < nodes.size(); i++)
 		{
-			_closestStopNames[i] = nodes[i]["name"];
-			System.println(i + ": " + _closestStopNames[i]);
+			_closestStops[i] = {"id" => nodes[i]["id"], "name" => nodes[i]["name"]};
 		}
+
+		System.println(_closestStops);
+		OpenStopSelectionMenu();
+	}
+
+	private function OpenStopSelectionMenu()
+	{
+		var menu = new MenuView();
+        menu.OpenMenu(_closestStops);
 	}
 	
 	private function ValidData(responseCode, data)
@@ -125,12 +140,28 @@ class RuterAPI
 			if(i < stopIDs.size()-1) { formattedStopIDs += ","; }
 		}
 
-		var jsonRequest = "{stopPlaces(ids:[" + formattedStopIDs + "]){name}}";
+		var jsonRequest = "{stopPlaces(ids:[" + formattedStopIDs + "]){id,name}}";
 		return CreateRequest(jsonRequest);
 	}
 
 	private function CreateRequest(request)
 	{
 		return { "query" => request};
+	}
+
+	function GetStopNames()
+	{
+		return _closestStopNames;
+	}
+
+	function HasLoaded()
+	{
+		return _hasLoaded;
+	}
+
+	function SelectStop(index)
+	{
+		_selectedStopIndex = index;
+		FetchStopData(_selectedStopIndex);
 	}
 }

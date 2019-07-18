@@ -3,23 +3,27 @@ using Toybox.System;
 
 class MenuView extends WatchUi.BehaviorDelegate 
 {    
+    private var _api;
+
     function initialize()
     {
         BehaviorDelegate.initialize();
+        _api = RuterAPI.GetReference();
+
         System.println("MenuView Loaded");
     }
 
-    function OpenMenu(stopNames)
+    function OpenMenu(stops)
     {   
         var menu = new WatchUi.Menu2({:title=>"Stoppesteder"});
         var delegate;
 
-        for(var i = 0; i < stopNames.size(); i++)
+        for(var i = 0; i < stops.size(); i++)
         {
-            menu.addItem( new MenuItem( stopNames[i], "", i, {}) );
+            menu.addItem( new MenuItem( stops[i]["name"], stops[i]["id"], stops[i]["id"], {}) );
         }
 
-        delegate = new MenuViewDelegate(); // a WatchUi.Menu2InputDelegate
+        delegate = new MenuViewDelegate(); 
         WatchUi.pushView(menu, delegate, WatchUi.SLIDE_IMMEDIATE);
     }
 }
@@ -33,6 +37,6 @@ class MenuViewDelegate extends WatchUi.Menu2InputDelegate
 
     function onSelect(item) 
     {
-        System.println(item.getId());
+        WatchUi.switchToView( new StopMonitorView(item.getId()), null, WatchUi.SLIDE_IMMEDIATE);
     }
 }

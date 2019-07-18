@@ -1,5 +1,6 @@
 using Toybox.WatchUi;
 using Toybox.System;
+using Toybox.Time;
 
 class StopMonitorView extends WatchUi.View 
 {
@@ -103,7 +104,7 @@ class StopMonitorView extends WatchUi.View
             break;
 
             case :firstTime:
-                return data.values()[0];
+                return BeautifyTimeStrings(data.values()[0]);
             break;
 
             case :secondName:
@@ -111,9 +112,39 @@ class StopMonitorView extends WatchUi.View
             break;
 
             case :secondTime:
-                return data.values()[1];
+                return BeautifyTimeStrings(data.values()[1]);
             break;
         }
+    }
+
+    private function BeautifyTimeStrings(timeStrings)
+    {
+        var timeString = "";
+
+        for(var i = 0; i < timeStrings.size(); i++)
+        {
+            timeString += ParseTimeString(timeStrings[i]) + " min";
+
+            if(i < timeStrings.size()-1) { timeString += ", "; }
+        }
+
+        return timeString;
+    }
+
+    private function ParseTimeString(timeString)
+    {
+        var offset = 11;
+        var hours = timeString.toString().substring(offset, offset+2);
+        var minutes = timeString.toString().substring(offset+3, offset+5);
+        var seconds = timeString.toString().substring(offset+6, offset+8);
+
+        var currentTime = System.getClockTime();
+        var busTime = (hours.toNumber() * 60 * 60) + (minutes.toNumber() * 60) + seconds.toNumber();
+        var clockTime = (currentTime.hour * 60 * 60) + (currentTime.min * 60) + currentTime.sec;
+        
+        var differenceInMinutes = (busTime - clockTime) / 60;
+        
+        return differenceInMinutes;
     }
 }
 

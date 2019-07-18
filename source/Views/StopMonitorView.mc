@@ -94,25 +94,29 @@ class StopMonitorView extends WatchUi.View
     {
         if(!_api.HasLoaded()) { return "Loading.."; }
         var data = _api.GetStopData();
-        
+        _api.SetPageLimit(data.size());
+
         if(data.size() <= 0) { return "No data received.."; }
 
+        var indexTwo = _api.GetPage() + 1;
         switch(label)
         {
             case :firstName:
-                return data.keys()[0];
+                return data.keys()[_api.GetPage()];
             break;
 
             case :firstTime:
-                return BeautifyTimeStrings(data.values()[0]);
+                return BeautifyTimeStrings(data.values()[_api.GetPage()]);
             break;
 
             case :secondName:
-                return data.keys()[1];
+                if(indexTwo >= data.size() ) { return ""; }
+                return data.keys()[indexTwo];
             break;
 
             case :secondTime:
-                return BeautifyTimeStrings(data.values()[1]);
+                if(indexTwo >= data.size() ) { return ""; }
+                return BeautifyTimeStrings(data.values()[indexTwo]);
             break;
         }
     }
@@ -164,18 +168,20 @@ class StopMonitorDelegate extends WatchUi.InputDelegate
         {
             case keyEvent.KEY_UP:
                 System.println("Up");
+                _api.FlipPage(1);
             break;
             
             case keyEvent.KEY_DOWN:
                 System.println("Down");
-            break;
+                _api.FlipPage(0);
+            break;  
 
             case keyEvent.KEY_ENTER:
                 System.println("Enter");
-                WatchUi.requestUpdate();
             break;
         }
-
+        
+        WatchUi.requestUpdate();
         return true;
     }
 }  

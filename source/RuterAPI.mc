@@ -11,8 +11,9 @@ class RuterAPI
 	private var _closestStops = {};
 	private var _stopData;
 	private var _lastLocation;
-	private var _selectedStopIndex = -1;
 	public var _hasLoaded = false;
+	private var _pageIndex = 0;
+	private var _pageLimit = 10;
 
 	private var options =	
 	{
@@ -170,14 +171,34 @@ class RuterAPI
 		return _hasLoaded;
 	}
 
-	function SelectStop(index)
+	function SelectStop(stopId)
 	{
-		_selectedStopIndex = index;
-		FetchStopData(_selectedStopIndex);
+		FetchStopData(stopId);
 	}
 
 	function GetStopData()
 	{
 		return _stopData;
+	}
+
+	function SetPageLimit(limit)
+	{
+		_pageLimit = limit;
+	}
+
+	function FlipPage(direction)
+	{
+		if(direction == 0)
+		{
+			if(_pageIndex < (_pageLimit-1)) { _pageIndex++; }
+		}else
+		{
+			if(_pageIndex > 0) { _pageIndex--; }
+		}
+	}
+
+	function GetPage()
+	{
+		return _pageIndex;
 	}
 }

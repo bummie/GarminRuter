@@ -65,7 +65,7 @@ class RuterAPI
 	{
 		if(!ValidData(responseCode, data)) { return; }
 		
-		_stopData = ParseStopData(_stopData);
+		_stopData = ParseStopData(data);
 		_hasLoaded = true;
 	}
 

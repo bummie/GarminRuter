@@ -70,11 +70,11 @@ class StopMonitorView extends WatchUi.View
 
         DrawText(dc, (dc.getWidth() / 2), 10 + shift, _stopName);
 
-        DrawText(dc, (dc.getWidth() / 2), thickness + shift, "Bygdøy via Bygdøynes");
-        DrawText(dc, (dc.getWidth() / 2), (thickness * 4) + shift, "Nydalen");
+        DrawText(dc, (dc.getWidth() / 2), thickness + shift, GetDisplayText(:firstName));
+        DrawText(dc, (dc.getWidth() / 2), (thickness * 4) + shift, GetDisplayText(:secondName));
 
-        DrawText(dc, (dc.getWidth() / 2), (thickness * 2) + shift, "Nå - 2 min - 10 min");
-        DrawText(dc, (dc.getWidth() / 2), (thickness * 5) + shift, "2 min - 8 min - 15 min");
+        DrawText(dc, (dc.getWidth() / 2), (thickness * 2) + shift, GetDisplayText(:firstTime));
+        DrawText(dc, (dc.getWidth() / 2), (thickness * 5) + shift, GetDisplayText(:secondTime));
     }
 
     private function DrawText(dc, x, y, text)
@@ -87,6 +87,33 @@ class StopMonitorView extends WatchUi.View
             text,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
+    }
+
+    private function GetDisplayText(label)
+    {
+        if(!_api.HasLoaded()) { return "Loading.."; }
+        var data = _api.GetStopData();
+        
+        if(data.size() <= 0) { return "No data received.."; }
+
+        switch(label)
+        {
+            case :firstName:
+                return data.keys()[0];
+            break;
+
+            case :firstTime:
+                return data.values()[0];
+            break;
+
+            case :secondName:
+                return data.keys()[1];
+            break;
+
+            case :secondTime:
+                return data.values()[1];
+            break;
+        }
     }
 }
 
@@ -114,6 +141,7 @@ class StopMonitorDelegate extends WatchUi.InputDelegate
 
             case keyEvent.KEY_ENTER:
                 System.println("Enter");
+                WatchUi.requestUpdate();
             break;
         }
 

@@ -8,7 +8,6 @@ class RuterAPI
 	private static var api = null;
 	private var URL = "https://api.entur.io/journey-planner/v2/graphql";	
 	private var _closestStopIDs = [];
-	private var _closestStopNames = [];
 	private var _closestStops = {};
 	private var _stopData;
 	private var _lastLocation;
@@ -66,9 +65,26 @@ class RuterAPI
 	{
 		if(!ValidData(responseCode, data)) { return; }
 		
-		_stopData = data;
-		System.println(data);
+		_stopData = ParseStopData(_stopData);
 		_hasLoaded = true;
+	}
+
+	private function ParseStopData(stopData)
+	{
+		var stops = stopData["data"]["stopPlace"]["estimatedCalls"];
+		var sortedStops = {};
+
+		for(var i = 0; i < stops.size(); i++)
+		{
+			var name = stops[i]["destinationDisplay"]["frontText"];
+			var time = stops[i]["expectedArrivalTime"];
+
+			if(!sortedStops.hasKey(name)) { sortedStops.put(name, []); }
+			sortedStops[name].add(time);
+		}
+
+		System.println(sortedStops);
+		return sortedStops;
 	}
 
 	function FetchStopNames(stopIDs)
@@ -149,11 +165,6 @@ class RuterAPI
 		return { "query" => request};
 	}
 
-	function GetStopNames()
-	{
-		return _closestStopNames;
-	}
-
 	function HasLoaded()
 	{
 		return _hasLoaded;
@@ -163,5 +174,10 @@ class RuterAPI
 	{
 		_selectedStopIndex = index;
 		FetchStopData(_selectedStopIndex);
+	}
+
+	function GetStopData()
+	{
+		return _stopData;
 	}
 }

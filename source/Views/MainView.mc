@@ -71,11 +71,13 @@ class MainDelegate extends WatchUi.InputDelegate
         {
             case keyEvent.KEY_ENTER:
                 System.println("Enter");
-                var location = _api.GetLocation();
+                //var location = Position.getInfo().position.toDegrees();
+                //if(location == null) { _api.Log("Fant ikke plassering."); break; }
+                //var position = {"latitude" => location[0], "longitude" => location[1]};
+                var position = {"latitude" => 59.900928, "longitude" => 10.675506};
 
-                if(location == null) { _api.Log("Fant ikke plassering."); break; }
-                _api.FetchClosestStops(location);
-
+                //System.println("Stored position: " + location);
+                _api.FetchClosestStops(position);
             break;
 
             case keyEvent.KEY_ESC:

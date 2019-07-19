@@ -17,7 +17,7 @@ class RuterBussApp extends App.AppBase
     {
         _api = RuterAPI.GetReference();
         System.println("App started...");
-        _api.SetLocation({"latitude" => 59.908795624003076, "longitude" => 10.749941278450478});
+        _api.SetLocation({"latitude" => 67.292038, "longitude" => 14.742081});
         //api.FetchClosestStops({"latitude" => 59.910011, "longitude" => 10.680239});
     }
 

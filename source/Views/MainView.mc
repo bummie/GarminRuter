@@ -48,7 +48,7 @@ class MainView extends WatchUi.View
     // When received position, find busroutes
 	function onPosition(info) 
 	{
-	    location = info.position.toDegrees();
+	    var location = info.position.toDegrees();
 	  	System.println("Received position: " + location[0] + ", " + location[1]);
         _api.Log("Found fresh position,\n press ENTER!");
         _api.SetLocation({"latitude" => location[0], "longitude" => location[1]});

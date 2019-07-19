@@ -17,7 +17,7 @@ class RuterAPI
 	private var _lastStopId;
 	private var _logMessage = "";
 
-	private var options =	
+	private var options =
 	{
 		:method => Com.HTTP_REQUEST_METHOD_POST,
 		:headers => {"Content-Type" => Com.REQUEST_CONTENT_TYPE_JSON},
@@ -53,9 +53,10 @@ class RuterAPI
 			System.println(i + ": " + _closestStopIDs[i]);
 		}
 
+		if(_closestStopIDs.size() <= 0 ) { Log("No stops found nearby!"); return;}
+
 		Log("Found stops!");
 		FetchStopNames(_closestStopIDs);
-		//System.println("Stopnames: " + RequestStopNames(_closestStopIDs));
 	}
 	
 	function FetchStopData(stopID)
@@ -96,7 +97,7 @@ class RuterAPI
 
 	function FetchStopNames(stopIDs)
 	{
-		if(stopIDs.size() <= 0) { System.println("StopIDs cannot be empty."); return; }
+		if(stopIDs.size() <= 0) { Log("No stops nearby!"); System.println("StopIDs cannot be empty."); return; }
 	
 		Log("Fetching stop names.");
 		System.println("Fetching stop names.");

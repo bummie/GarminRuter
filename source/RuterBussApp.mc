@@ -1,12 +1,11 @@
 using Toybox.Application as App;
-using Toybox.Communications as Com;
-using Toybox.Application.Storage as Storage;
 using Toybox.Position;
 using Toybox.System;
 
 class RuterBussApp extends App.AppBase
 {
-	var api;
+	var _api;
+    var location;
 	
     function initialize()
     {
@@ -16,13 +15,10 @@ class RuterBussApp extends App.AppBase
     // onStart() is called on application start up
     function onStart(state)
     {
-        api = RuterAPI.GetReference();
-    	Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
+        _api = RuterAPI.GetReference();
         System.println("App started...");
-        
+        _api.SetLocation({"latitude" => 59.908795624003076, "longitude" => 10.749941278450478});
         //api.FetchClosestStops({"latitude" => 59.910011, "longitude" => 10.680239});
-        api.FetchClosestStops({"latitude" => 59.91439857093467, "longitude" => 10.733748436295173});
-
     }
 
     // onStop() is called when your application is exiting
@@ -33,13 +29,6 @@ class RuterBussApp extends App.AppBase
     // Return the initial view of your application here
     function getInitialView() 
     {
-        return [ new RuterBussView() ];
+        return [ new MainView(), new MainDelegate() ];
     }
-    
-    // When received position, find busroutes
-	function onPosition(info) 
-	{
-	    var loc = info.position.toDegrees();
-	  	System.println("Received position: " + loc[0] + ", " + loc[1]);
-	}
 }

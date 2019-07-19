@@ -1,7 +1,7 @@
 using Toybox.Application as App;
 using Toybox.Communications as Com;
 using Toybox.Math;
-using Toybox.WatchUi as Ui;
+using Toybox.WatchUi;
 
 class RuterAPI
 {
@@ -15,6 +15,7 @@ class RuterAPI
 	private var _pageIndex = 0;
 	private var _pageLimit = 10;
 	private var _lastStopId;
+	private var _logMessage = "";
 
 	private var options =	
 	{
@@ -34,13 +35,14 @@ class RuterAPI
 	{		  	
 		_hasLoaded = false;
 		_lastLocation = location;
+		Log("Fetching closest stops.");
 		System.println("Fetching closest stops.");
 	    Com.makeWebRequest(URL, RequestClosestStops(location["latitude"], location["longitude"]), options, method(:CallbackClosestStops));
 	}
 
 	function CallbackClosestStops(responseCode, data)
 	{
-		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchClosestStops(_lastLocation); return; }
+		if(!ValidData(responseCode, data)) { Log("Error, retrying."); System.println("Retrying.."); FetchClosestStops(_lastLocation); return; }
 		
 		var nodes = data["data"]["nearest"]["edges"]; //TODO:: Check if nodes has size greater than 0	
 		_closestStopIDs = new [nodes.size()];
@@ -51,6 +53,7 @@ class RuterAPI
 			System.println(i + ": " + _closestStopIDs[i]);
 		}
 
+		Log("Found stops!");
 		FetchStopNames(_closestStopIDs);
 		//System.println("Stopnames: " + RequestStopNames(_closestStopIDs));
 	}
@@ -66,10 +69,11 @@ class RuterAPI
 
 	function CallbackStopData(responseCode, data)
 	{
-		if(!ValidData(responseCode, data)) { return; }
+		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchStopData(_lastStopId); return; }
 		
 		_stopData = ParseStopData(data);
 		_hasLoaded = true;
+		WatchUi.requestUpdate();
 	}
 
 	private function ParseStopData(stopData)
@@ -94,13 +98,14 @@ class RuterAPI
 	{
 		if(stopIDs.size() <= 0) { System.println("StopIDs cannot be empty."); return; }
 	
+		Log("Fetching stop names.");
 		System.println("Fetching stop names.");
 	    Com.makeWebRequest(URL, RequestStopNames(stopIDs), options, method(:CallbackStopNames));
 	}
 
 	function CallbackStopNames(responseCode, data)
 	{
-		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchStopNames(_closestStopIDs); return; }
+		if(!ValidData(responseCode, data)) { Log("Error, retrying"); System.println("Retrying.."); FetchStopNames(_closestStopIDs); return; }
 		
 		var nodes = data["data"]["stopPlaces"]; //TODO:: Check if nodes has size greater than 0	
 		
@@ -111,6 +116,7 @@ class RuterAPI
 			_closestStops[i] = {"id" => nodes[i]["id"], "name" => nodes[i]["name"]};
 		}
 
+		Log("Found stop names.");
 		System.println(_closestStops);
 		OpenStopSelectionMenu();
 	}
@@ -207,5 +213,26 @@ class RuterAPI
 	function GetLastStopId()
 	{
 		return _lastStopId;
+	}
+
+	function Log(text)
+	{
+		_logMessage = text;
+		WatchUi.requestUpdate();
+	}
+
+	function GetLogMessage()
+	{
+		return _logMessage;
+	}
+
+	function SetLocation(location)
+	{
+		_lastLocation = location;
+	}
+
+	function GetLocation()
+	{
+		return _lastLocation;
 	}
 }

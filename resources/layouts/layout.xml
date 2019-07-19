@@ -1,10 +1,6 @@
 <layouts>
 	<layout id="MainLayout">
-		<label id="titleLabel" text="Ruter" x ="center" y="20" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_CENTER|Gfx.TEXT_JUSTIFY_VCENTER" color="Gfx.COLOR_LT_GRAY"/>
-		<label id="mainLabel" text="Ruter" x ="center" y="40" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_WHITE"/>
-	</layout>
-
-	<layout id="StopMonitorLayout">
-		<label id="titleLabel" text="StopMonitor" x ="center" y="20" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_CENTER|Gfx.TEXT_JUSTIFY_VCENTER" color="Gfx.COLOR_LT_GRAY"/>
+		<label id="titleLabel" text="Buss" x ="center" y="20" font="Gfx.FONT_TINY" justification="Gfx.TEXT_JUSTIFY_CENTER|Gfx.TEXT_JUSTIFY_VCENTER" color="Gfx.COLOR_LT_GRAY"/>
+		<label id="mainLabel" text="" x ="center" y="center" font="Gfx.FONT_XTINY" justification="Gfx.TEXT_JUSTIFY_CENTER" color="Gfx.COLOR_WHITE"/>
 	</layout>
 </layouts>

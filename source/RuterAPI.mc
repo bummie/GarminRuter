@@ -6,6 +6,7 @@ using Toybox.WatchUi;
 class RuterAPI
 {
 	private static var api = null;
+	private var RELEASE = false;
 	private var URL = "https://api.entur.io/journey-planner/v2/graphql";	
 	private var _closestStopIDs = [];
 	private var _closestStops = {};
@@ -16,6 +17,8 @@ class RuterAPI
 	private var _pageLimit = 10;
 	private var _lastStopId;
 	private var _logMessage = "";
+	private var _maxReconnections = 3;
+	private var _reconnections = 0;
 
 	private var options =
 	{
@@ -42,9 +45,20 @@ class RuterAPI
 
 	function CallbackClosestStops(responseCode, data)
 	{
-		if(!ValidData(responseCode, data)) { Log("Error, retrying."); System.println("Retrying.."); FetchClosestStops(_lastLocation); return; }
+		if(!ValidData(responseCode, data))
+		{
+			if(!ShouldReconnect()) { return; }
+
+			Log("Error, retrying."); 
+			System.println("Retrying..");
+			FetchClosestStops(_lastLocation);
+			return;
+		}
 		
+		System.println("ClosestStopData: " + data);
 		var nodes = data["data"]["nearest"]["edges"]; //TODO:: Check if nodes has size greater than 0	
+		if(nodes == null) { System.println("Closeststop corrupted"); Log("Data corrupted."); return; }
+
 		_closestStopIDs = new [nodes.size()];
 
 		for(var i = 0; i < nodes.size(); i++)
@@ -71,7 +85,7 @@ class RuterAPI
 	function CallbackStopData(responseCode, data)
 	{
 		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchStopData(_lastStopId); return; }
-		
+	
 		_stopData = ParseStopData(data);
 		_hasLoaded = true;
 		WatchUi.requestUpdate();
@@ -80,6 +94,9 @@ class RuterAPI
 	private function ParseStopData(stopData)
 	{
 		var stops = stopData["data"]["stopPlace"]["estimatedCalls"];
+
+		if(stops == null) { System.println("StopData corrupted"); Log("Data corrupted."); return; }
+		
 		var sortedStops = {};
 
 		for(var i = 0; i < stops.size(); i++)
@@ -97,19 +114,31 @@ class RuterAPI
 
 	function FetchStopNames(stopIDs)
 	{
+		if(stopIDs == null) { System.println("Received null stopIDs"); Log("Reeived ID is null."); return; }
 		if(stopIDs.size() <= 0) { Log("No stops nearby!"); System.println("StopIDs cannot be empty."); return; }
 	
 		Log("Fetching stop names.");
 		System.println("Fetching stop names.");
+
 	    Com.makeWebRequest(URL, RequestStopNames(stopIDs), options, method(:CallbackStopNames));
 	}
 
 	function CallbackStopNames(responseCode, data)
 	{
-		if(!ValidData(responseCode, data)) { Log("Error, retrying"); System.println("Retrying.."); FetchStopNames(_closestStopIDs); return; }
+		System.println("RC: " + responseCode + " Data: " + data);
+		if(!ValidData(responseCode, data))
+		{
+			if(!ShouldReconnect()) { return; }
+			Log("Error, retrying"); 
+			System.println("Retrying.."); 
+			FetchStopNames(_closestStopIDs); 
+			return;
+		}
 		
+		System.println("Data: " + data);
 		var nodes = data["data"]["stopPlaces"]; //TODO:: Check if nodes has size greater than 0	
 		
+		if(nodes == null) {System.println("Data is corrupt."); Log("Data corrupted."); return; }
 		_closestStops = new [nodes.size()];
 
 		for(var i = 0; i < nodes.size(); i++)
@@ -130,16 +159,13 @@ class RuterAPI
 	
 	private function ValidData(responseCode, data)
 	{
+		if(responseCode <= 0) { System.println( responseCode + ": Connection error"); Log("No internet connection!"); return false; }
 		if(responseCode != 200) { System.println( responseCode +  " : Could not retrieve data."); return false; }
-		if(data == null || data.size() <= 0) { System.println("Data received is empty."); return false;}
-		return true;
-	}
+		if(data == null) { System.println("Data received is empty."); return false;}
+		if(!data.hasKey("data")) { System.println("Data received is corrupted."); return false; }
+		System.println("Data: " + data + " Keys: " + data.keys() + " Values: " + data.values());
 
-	function CallbackPrint(responseCode, data)
-	{
-		if(!ValidData(responseCode, data)) { return; }
-		
-		System.println( responseCode + ": Data received: " + data);
+		return true;	
 	}
 
 	private function RequestClosestStops(latitude, longitude)
@@ -151,6 +177,7 @@ class RuterAPI
 	private function RequestStopData(stopID)
 	{
 		var jsonRequest = "{stopPlace(id:\\\""+ stopID + "\\\"){name,estimatedCalls{expectedArrivalTime,destinationDisplay{frontText}}}}";
+		if(RELEASE) { jsonRequest = "{stopPlace(id:\""+ stopID + "\"){name,estimatedCalls{expectedArrivalTime,destinationDisplay{frontText}}}}";}
 		return CreateRequest(jsonRequest);
 	}
 
@@ -162,7 +189,9 @@ class RuterAPI
 
 		for(var i = 0; i < stopIDs.size(); i++)
 		{
-			formattedStopIDs += "\\\""+ stopIDs[i] + "\\\"";
+			if(!RELEASE) { formattedStopIDs += "\\" + "\"" + stopIDs[i] + "\\" + "\""; }
+			else { formattedStopIDs += "\"" + stopIDs[i] + "\""; }
+			
 			if(i < stopIDs.size()-1) { formattedStopIDs += ","; }
 		}
 
@@ -172,7 +201,8 @@ class RuterAPI
 
 	private function CreateRequest(request)
 	{
-		return { "query" => request};
+		var req = { "query" => request };		
+		return req;
 	}
 
 	function HasLoaded()
@@ -206,6 +236,15 @@ class RuterAPI
 		}
 	}
 
+	private function ShouldReconnect()
+	{
+		if(_reconnections < _maxReconnections) { _reconnections++; System.println("Reconnections: " + _reconnections); return true; }
+
+		System.println("No more reconnections!");
+		Log("Could not connect!\nENTER to retry.");
+		return false;
+	}
+
 	function GetPage()
 	{
 		return _pageIndex;
@@ -235,5 +274,10 @@ class RuterAPI
 	function GetLocation()
 	{
 		return _lastLocation;
+	}
+
+	function ResetConnections()
+	{
+		_reconnections = 0;
 	}
 }

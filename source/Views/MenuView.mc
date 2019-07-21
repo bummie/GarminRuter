@@ -37,6 +37,6 @@ class MenuViewDelegate extends WatchUi.Menu2InputDelegate
 
     function onSelect(item) 
     {
-        WatchUi.switchToView( new StopMonitorView(item.getId(), item.getLabel()), new StopMonitorDelegate(), WatchUi.SLIDE_IMMEDIATE);
+        WatchUi.pushView( new StopMonitorView(item.getId(), item.getLabel()), new StopMonitorDelegate(), WatchUi.SLIDE_IMMEDIATE);
     }
 }

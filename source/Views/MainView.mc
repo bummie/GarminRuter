@@ -54,7 +54,7 @@ class MainView extends WatchUi.View
         _api.SetLocation({"latitude" => location[0], "longitude" => location[1]});
 	}
 }
-
+    
 class MainDelegate extends WatchUi.InputDelegate
 {
     private var _api;
@@ -75,9 +75,10 @@ class MainDelegate extends WatchUi.InputDelegate
                 //if(location == null) { _api.Log("Fant ikke plassering."); break; }
                 //var position = {"latitude" => location[0], "longitude" => location[1]};
                 var position = {"latitude" => 59.900928, "longitude" => 10.675506};
-
+                _api.SetLocation(position);
                 //System.println("Stored position: " + location);
-                _api.FetchClosestStops(position);
+                _api.ResetConnections();
+                _api.FetchClosestStops(_api.GetLocation());
             break;
 
             case keyEvent.KEY_ESC:

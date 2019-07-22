@@ -1,15 +1,26 @@
 using Toybox.Application as App;
 using Toybox.Communications as Com;
 using Toybox.Math;
-using Toybox.WatchUi as Ui;
+using Toybox.WatchUi;
 
 class RuterAPI
 {
 	private static var api = null;
-	private var URL = "https://api.entur.io/journey-planner/v2/graphql";
-	private var JSON_REQUEST_CLOSEST_STOP = "{stopPlace(id: \\\"NSR:StopPlace:4370\\\"){ name }}";
-	
-	hidden var options =	
+	private var RELEASE = true;
+	private var URL = "https://api.entur.io/journey-planner/v2/graphql";	
+	private var _closestStopIDs = [];
+	private var _closestStops = {};
+	private var _stopData;
+	private var _lastLocation;
+	public var _hasLoaded = false;
+	private var _pageIndex = 0;
+	private var _pageLimit = 10;
+	private var _lastStopId;
+	private var _logMessage = "";
+	private var _maxReconnections = 3;
+	private var _reconnections = 0;
+
+	private var options =
 	{
 		:method => Com.HTTP_REQUEST_METHOD_POST,
 		:headers => {"Content-Type" => Com.REQUEST_CONTENT_TYPE_JSON},
@@ -23,40 +34,247 @@ class RuterAPI
 	}
 	
 	// Returns the closest stops for a given position
-	function FetchClosestStop(latitude, longitude) 
-	{		  
-		System.println("Making web request");
-		System.println(JSON_REQUEST_CLOSEST_STOP);	
-	    Com.makeWebRequest(URL, CreateRequest(JSON_REQUEST_CLOSEST_STOP), options, method(:CallbackPrint));
-	}
-	
-	function CallbackPrint(responseCode, data)
-	{
-		if(responseCode != 200) { System.println( responseCode +  " : Could not retrieve data."); }
-		if(data == null || data.size() <= 0) { System.println("Data received is empty."); }
-
-		System.println( responseCode + ": Data received: " + data);
+	function FetchClosestStops(location) 
+	{		  	
+		_hasLoaded = false;
+		_lastLocation = location;
+		Log("Fetching closest stops.");
+		System.println("Fetching closest stops.");
+	    Com.makeWebRequest(URL, RequestClosestStops(location["latitude"], location["longitude"]), options, method(:CallbackClosestStops));
 	}
 
-	hidden function CreateRequest(request)
+	function CallbackClosestStops(responseCode, data)
 	{
-		return { "query" => request};
-	}
-	
-	// Converts Degrees to UTM coordinates
-	function DegToUTM(Lat, Lon)
-	{
-		var zone = Math.floor(Lon/6+31);
+		if(!ValidData(responseCode, data))
+		{
+			if(!ShouldReconnect()) { return; }
+
+			Log("Error, retrying."); 
+			System.println("Retrying..");
+			FetchClosestStops(_lastLocation);
+			return;
+		}
 		
-		var easting = 0.5*Math.log((1+Math.cos(Lat*Math.PI/180)*Math.sin(Lon*Math.PI/180-(6*zone-183)*Math.PI/180))/(1-Math.cos(Lat*Math.PI/180)*Math.sin(Lon*Math.PI/180-(6*zone-183)*Math.PI/180)), Math.E)*0.9996*6399593.62/Math.pow((1+Math.pow(0.0820944379, 2)*Math.pow(Math.cos(Lat*Math.PI/180), 2)), 0.5)*(1 + Math.pow(0.0820944379,2)/2*Math.pow((0.5*Math.log((1+Math.cos(Lat*Math.PI/180)*Math.sin(Lon*Math.PI/180-(6*zone-183)*Math.PI/180))/(1-Math.cos(Lat*Math.PI/180)*Math.sin(Lon*Math.PI/180-(6*zone-183)*Math.PI/180)), Math.E)),2)*Math.pow(Math.cos(Lat*Math.PI/180),2)/3)+500000;
-		easting = Math.round(easting*100)*0.01;
-		       
-		var northing = (Math.atan(Math.tan(Lat*Math.PI/180)/Math.cos((Lon*Math.PI/180-(6*zone -183)*Math.PI/180)))-Lat*Math.PI/180)*0.9996*6399593.625/Math.sqrt(1+0.006739496742*Math.pow(Math.cos(Lat*Math.PI/180),2))*(1+0.006739496742/2*Math.pow(0.5*Math.log((1+Math.cos(Lat*Math.PI/180)*Math.sin((Lon*Math.PI/180-(6*zone -183)*Math.PI/180)))/(1-Math.cos(Lat*Math.PI/180)*Math.sin((Lon*Math.PI/180-(6*zone -183)*Math.PI/180))), Math.E),2)*Math.pow(Math.cos(Lat*Math.PI/180),2))+0.9996*6399593.625*(Lat*Math.PI/180-0.005054622556*(Lat*Math.PI/180+Math.sin(2*Lat*Math.PI/180)/2)+4.258201531e-05*(3*(Lat*Math.PI/180+Math.sin(2*Lat*Math.PI/180)/2)+Math.sin(2*Lat*Math.PI/180)*Math.pow(Math.cos(Lat*Math.PI/180),2))/4-1.674057895e-07*(5*(3*(Lat*Math.PI/180+Math.sin(2*Lat*Math.PI/180)/2)+Math.sin(2*Lat*Math.PI/180)*Math.pow(Math.cos(Lat*Math.PI/180),2))/4+Math.sin(2*Lat*Math.PI/180)*Math.pow(Math.cos(Lat*Math.PI/180),2)*Math.pow(Math.cos(Lat*Math.PI/180),2))/3);
-		northing = Math.round(northing*100)*0.01;
+		System.println("ClosestStopData: " + data);
+		var nodes = data["data"]["nearest"]["edges"]; //TODO:: Check if nodes has size greater than 0	
+		if(nodes == null) { System.println("Closeststop corrupted"); Log("Data corrupted."); return; }
 
-       return	{ 	
-       				"east" => easting.toNumber(),
-    				"north" => northing.toNumber()
-       			};
+		_closestStopIDs = new [nodes.size()];
+
+		for(var i = 0; i < nodes.size(); i++)
+		{
+			_closestStopIDs[i] = nodes[i]["node"]["place"]["id"];
+			System.println(i + ": " + _closestStopIDs[i]);
+		}
+
+		if(_closestStopIDs.size() <= 0 ) { Log("No stops found nearby!"); return;}
+
+		Log("Found stops!");
+		FetchStopNames(_closestStopIDs);
+	}
+	
+	function FetchStopData(stopID)
+	{
+		if(stopID == "") { System.println("StopID cannot be empty."); return; }
+
+		_lastStopId = stopID;
+		System.println("Fetching stop data: " + stopID);
+	    Com.makeWebRequest(URL, RequestStopData(stopID), options, method(:CallbackStopData));
+	}
+
+	function CallbackStopData(responseCode, data)
+	{
+		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchStopData(_lastStopId); return; }
+	
+		_stopData = ParseStopData(data);
+		_hasLoaded = true;
+		WatchUi.requestUpdate();
+	}
+
+	private function ParseStopData(stopData)
+	{
+		var stops = stopData["data"]["stopPlace"]["estimatedCalls"];
+
+		if(stops == null) { System.println("StopData corrupted"); Log("Data corrupted."); return; }
+		
+		var sortedStops = {};
+
+		for(var i = 0; i < stops.size(); i++)
+		{
+			var name = stops[i]["destinationDisplay"]["frontText"];
+			var time = stops[i]["expectedArrivalTime"];
+
+			if(!sortedStops.hasKey(name)) { sortedStops.put(name, []); }
+			sortedStops[name].add(time);
+		}
+
+		System.println(sortedStops);
+		return sortedStops;
+	}
+
+	function FetchStopNames(stopIDs)
+	{
+		if(stopIDs == null) { System.println("Received null stopIDs"); Log("Reeived ID is null."); return; }
+		if(stopIDs.size() <= 0) { Log("No stops nearby!"); System.println("StopIDs cannot be empty."); return; }
+	
+		Log("Fetching stop names.");
+		System.println("Fetching stop names.");
+
+	    Com.makeWebRequest(URL, RequestStopNames(stopIDs), options, method(:CallbackStopNames));
+	}
+
+	function CallbackStopNames(responseCode, data)
+	{
+		System.println("RC: " + responseCode + " Data: " + data);
+		if(!ValidData(responseCode, data))
+		{
+			if(!ShouldReconnect()) { return; }
+			Log("Error, retrying"); 
+			System.println("Retrying.."); 
+			FetchStopNames(_closestStopIDs); 
+			return;
+		}
+		
+		var nodes = data["data"]["stopPlaces"]; //TODO:: Check if nodes has size greater than 0	
+		
+		if(nodes == null) {System.println("Data is corrupt."); Log("Data corrupted."); return; }
+		_closestStops = new [nodes.size()];
+
+		for(var i = 0; i < nodes.size(); i++)
+		{
+			_closestStops[i] = {"id" => nodes[i]["id"], "name" => nodes[i]["name"]};
+		}
+
+		Log("Found stop names.");
+		System.println(_closestStops);
+		OpenStopSelectionMenu();
+	}
+
+	private function OpenStopSelectionMenu()
+	{
+		var menu = new MenuView();
+        menu.OpenMenu(_closestStops);
+	}
+	
+	private function ValidData(responseCode, data)
+	{
+		if(responseCode <= 0) { System.println( responseCode + ": Connection error"); Log("No internet connection!"); return false; }
+		if(responseCode != 200) { System.println( responseCode +  " : Could not retrieve data."); return false; }
+		if(data == null) { System.println("Data received is empty."); return false;}
+		if(!data.hasKey("data")) { System.println("Data received is corrupted."); return false; }
+		return true;	
+	}
+
+	private function RequestClosestStops(latitude, longitude)
+	{
+		var jsonRequest = "{nearest(latitude:" + latitude + ",longitude:" + longitude + ",maximumDistance:300,filterByPlaceTypes:stopPlace,filterByModes:bus){edges{node{place{id}}}}}";
+		return CreateRequest(jsonRequest);
+	}
+
+	private function RequestStopData(stopID)
+	{
+		var jsonRequest = "{stopPlace(id:\\\""+ stopID + "\\\"){name,estimatedCalls{expectedArrivalTime,destinationDisplay{frontText}}}}";
+		if(RELEASE) { jsonRequest = "{stopPlace(id:\""+ stopID + "\"){name,estimatedCalls{expectedArrivalTime,destinationDisplay{frontText}}}}";}
+		return CreateRequest(jsonRequest);
+	}
+
+	private function RequestStopNames(stopIDs)
+	{
+		if(stopIDs.size() <= 0) { System.println("StopIDs are empty."); return; }
+
+		var formattedStopIDs = "";
+
+		for(var i = 0; i < stopIDs.size(); i++)
+		{
+			if(!RELEASE) { formattedStopIDs += "\\" + "\"" + stopIDs[i] + "\\" + "\""; }
+			else { formattedStopIDs += "\"" + stopIDs[i] + "\""; }
+			
+			if(i < stopIDs.size()-1) { formattedStopIDs += ","; }
+		}
+
+		var jsonRequest = "{stopPlaces(ids:[" + formattedStopIDs + "]){id,name}}";
+		return CreateRequest(jsonRequest);
+	}
+
+	private function CreateRequest(request)
+	{
+		var req = { "query" => request };		
+		return req;
+	}
+
+	function HasLoaded()
+	{
+		return _hasLoaded;
+	}
+
+	function SelectStop(stopId)
+	{
+		FetchStopData(stopId);
+	}
+
+	function GetStopData()
+	{
+		return _stopData;
+	}
+
+	function SetPageLimit(limit)
+	{
+		_pageLimit = limit;
+	}
+
+	function FlipPage(direction)
+	{
+		if(direction == 0)
+		{
+			if(_pageIndex < (_pageLimit-1)) { _pageIndex++; }
+		}else
+		{
+			if(_pageIndex > 0) { _pageIndex--; }
+		}
+	}
+
+	private function ShouldReconnect()
+	{
+		if(_reconnections < _maxReconnections) { _reconnections++; System.println("Reconnections: " + _reconnections); return true; }
+
+		System.println("No more reconnections!");
+		Log("Could not connect!\nENTER to retry.");
+		return false;
+	}
+
+	function GetPage()
+	{
+		return _pageIndex;
+	}
+
+	function GetLastStopId()
+	{
+		return _lastStopId;
+	}
+
+	function Log(text)
+	{
+		_logMessage = text;
+		WatchUi.requestUpdate();
+	}
+
+	function GetLogMessage()
+	{
+		return _logMessage;
+	}
+
+	function SetLocation(location)
+	{
+		_lastLocation = location;
+	}
+
+	function GetLocation()
+	{
+		return _lastLocation;
+	}
+
+	function ResetConnections()
+	{
+		_reconnections = 0;
 	}
 }

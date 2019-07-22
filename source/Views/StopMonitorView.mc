@@ -71,18 +71,18 @@ class StopMonitorView extends WatchUi.View
         var thickness = dc.getHeight() / _thickness;
         var shift = thickness / 2;
 
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         DrawText(dc, (dc.getWidth() / 2), 10 + shift, _stopName);
-
         DrawText(dc, (dc.getWidth() / 2), thickness + shift, GetDisplayText(:firstName));
         DrawText(dc, (dc.getWidth() / 2), (thickness * 4) + shift, GetDisplayText(:secondName));
 
+        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
         DrawText(dc, (dc.getWidth() / 2), (thickness * 2) + shift, GetDisplayText(:firstTime));
         DrawText(dc, (dc.getWidth() / 2), (thickness * 5) + shift, GetDisplayText(:secondTime));
     }
 
     private function DrawText(dc, x, y, text)
     {
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
         dc.drawText(
             x, 
             y,     

@@ -6,7 +6,7 @@ using Toybox.WatchUi;
 class RuterAPI
 {
 	private static var api = null;
-	private var RELEASE = false;
+	private var RELEASE = true;
 	private var URL = "https://api.entur.io/journey-planner/v2/graphql";	
 	private var _closestStopIDs = [];
 	private var _closestStops = {};

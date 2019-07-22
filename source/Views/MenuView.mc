@@ -17,7 +17,7 @@ class MenuView extends WatchUi.BehaviorDelegate
     {   
         var menu = new WatchUi.Menu2({:title=>"Stoppesteder"});
         var delegate;
-
+    
         for(var i = 0; i < stops.size(); i++)
         {
             menu.addItem( new MenuItem( stops[i]["name"], stops[i]["id"], stops[i]["id"], {}) );

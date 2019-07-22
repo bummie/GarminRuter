@@ -1,8 +1,8 @@
 GarminRuter
 ==================
-Widget that display info about a given bus route in Akershus.
+Widget that display info about when the bus arrives.
 
-![GarminRuter](https://i.imgur.com/1pFrLdK.png)
+![GarminRuter](https://imgur.com/ypd7uzM.png)
 
 # Launch the simulator
 connectiq

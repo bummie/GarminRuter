@@ -14,38 +14,28 @@ class MainView extends WatchUi.View
         View.initialize();
         _api = RuterAPI.GetReference();
     }
-    // Load your resources here
-    function onLayout(dc)
+    
+   function onLayout(dc)
     {
         setLayout(Rez.Layouts.MainLayout(dc));
     	_labelData = View.findDrawableById("mainLabel");
     	_labelTitle = View.findDrawableById("titleLabel");
     }
 
-    // Called when this View is brought to the foreground. Restore
-    // the state of this View and prepare it to be shown. This includes
-    // loading resources into memory.
     function onShow()
     {        
         _api.Log("Searching for position.\nENTER: Load last position.");
         Position.enableLocationEvents(Position.LOCATION_ONE_SHOT, method(:onPosition));
     }
 
-    // Update the view
     function onUpdate(dc)
     {
         _labelData.setText(_api.GetLogMessage());
         View.onUpdate(dc);
     }
 
-    // Called when this View is removed from the screen. Save the
-    // state of this View here. This includes freeing resources from
-    // memory.
-    function onHide() 
-    {
-    }
+    function onHide() {}
 
-    // When received position, find busroutes
 	function onPosition(info) 
 	{
 	    var location = info.position.toDegrees();

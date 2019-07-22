@@ -135,7 +135,6 @@ class RuterAPI
 			return;
 		}
 		
-		System.println("Data: " + data);
 		var nodes = data["data"]["stopPlaces"]; //TODO:: Check if nodes has size greater than 0	
 		
 		if(nodes == null) {System.println("Data is corrupt."); Log("Data corrupted."); return; }
@@ -163,8 +162,6 @@ class RuterAPI
 		if(responseCode != 200) { System.println( responseCode +  " : Could not retrieve data."); return false; }
 		if(data == null) { System.println("Data received is empty."); return false;}
 		if(!data.hasKey("data")) { System.println("Data received is corrupted."); return false; }
-		System.println("Data: " + data + " Keys: " + data.keys() + " Values: " + data.values());
-
 		return true;	
 	}
 

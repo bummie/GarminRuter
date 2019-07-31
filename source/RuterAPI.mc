@@ -19,6 +19,7 @@ class RuterAPI
 	private var _logMessage = "";
 	private var _maxReconnections = 3;
 	private var _reconnections = 0;
+	private var _busyFetchingData = false;
 
 	private var options =
 	{
@@ -75,10 +76,12 @@ class RuterAPI
 	
 	function FetchStopData(stopID)
 	{
+		if(_busyFetchingData) { System.println("Busy fetching data, dont spam!"); return; }
 		if(stopID == "") { System.println("StopID cannot be empty."); return; }
 
 		_lastStopId = stopID;
 		System.println("Fetching stop data: " + stopID);
+		_busyFetchingData = true;
 	    Com.makeWebRequest(URL, RequestStopData(stopID), options, method(:CallbackStopData));
 	}
 
@@ -87,6 +90,7 @@ class RuterAPI
 		if(!ValidData(responseCode, data)) { System.println("Retrying.."); FetchStopData(_lastStopId); return; }
 	
 		_stopData = ParseStopData(data);
+		_busyFetchingData = false;
 		_hasLoaded = true;
 		WatchUi.requestUpdate();
 	}
@@ -95,7 +99,7 @@ class RuterAPI
 	{
 		var stops = stopData["data"]["stopPlace"]["estimatedCalls"];
 
-		if(stops == null) { System.println("StopData corrupted"); Log("Data corrupted."); return; }
+		if(stops == null) { System.println("StopData corrupted"); Log("Data corrupted."); return null; }
 		
 		var sortedStops = {};
 
@@ -180,7 +184,7 @@ class RuterAPI
 
 	private function RequestStopNames(stopIDs)
 	{
-		if(stopIDs.size() <= 0) { System.println("StopIDs are empty."); return; }
+		if(stopIDs.size() <= 0) { System.println("StopIDs are empty."); return null; }
 
 		var formattedStopIDs = "";
 

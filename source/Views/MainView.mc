@@ -51,7 +51,7 @@ class MainDelegate extends WatchUi.InputDelegate
 
     function initialize()
     {
-        BehaviorDelegate.initialize();
+        InputDelegate.initialize();
         _api = RuterAPI.GetReference();
     }
 
